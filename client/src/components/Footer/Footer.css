@@ -1,0 +1,51 @@
+footer{
+    background-color: #373F48;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 50px;
+    padding: 50px 100px;
+    margin-top:50px ;
+    color: white;
+font-family: 'Inter',sans-serif;    
+}
+footer div h2{
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+footer ul {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+footer li{
+    color: #A4ADB8    ;
+    list-style-type: none;
+    font-size: 15px;
+}
+footer div{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+
+}
+
+.footer_info .company{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+.footer_info .company svg{
+    font-size: 25px;
+    
+}
+.footer_info img{
+    width: 120px;
+    object-fit: contain;
+}
+.footer_info p{
+    font-size: 14px;
+    color: #A4ADB8;
+}

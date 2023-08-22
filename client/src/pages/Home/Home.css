@@ -1,0 +1,527 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,200&display=swap');
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    background: #4b4547;  /* fallback colour. Make sure this is just one solid colour. */
+    background: -webkit-linear-gradient(rgba(86, 86, 88, 0.8), rgba(94, 91, 92, 0.8)), url("/images/hero.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.801), rgba(0, 0, 0, 0.829)), url("/images/hero.jpg"); /* The least supported option. */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  
+  .heroContainer {
+    position: relative;
+    color: white; /* Set the text color to white or appropriate color for visibility */
+    text-align: center;
+    display: flex;
+    gap: 80px;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+  }
+  .heroContainer span p{
+    width: 90%;
+    text-align: center;
+    margin: 0px auto;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.8px;
+    margin-top: 15px;
+    line-height: 22px;
+
+}
+  
+  .heroContainer h1{
+    font-weight: 400;
+    font-size: 35px;
+    letter-spacing: 1px;
+
+}
+.heroBtns{
+    display: flex;
+    justify-content: space-between;
+    width: fit-content;
+    margin: 0px auto;
+    gap: 90px;
+    align-items: center;
+}
+.heroBtns button{
+    background-color: #02431B;
+    color: white;
+    border: 1px solid white;
+    padding: 20px 10px;
+    font-size: 17px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    cursor: pointer;
+}
+  /* Your other styling can go here */
+  .popular{
+    background-color:#02431B;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0px;
+    gap: 30px;
+    color: white;
+    padding-bottom: 100px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  }
+  .popularContainer{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 19px;
+    margin-top: 30px;
+  }
+  .popularContainer .popularCard{
+    width: 160px;
+    height: 160px;
+    background-color: white;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #545E6B;
+    gap: 20px;
+    text-align: center;
+    box-shadow: 1px 1px 9px rgba(77, 77, 77, 0.747);
+
+    border-radius: 5px;
+  }
+  
+  /* qualities */
+  .qualities{
+    background-color: white;
+    padding: 80px 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  }
+  .qualitiesContainer{
+    width: 80%;
+    margin: 0px auto;
+
+  }
+  .qualitiesContainer .heading{
+    text-align: center;
+
+  }
+  .qualitiesContainer .heading h1{
+    color: #545E6B;
+  }
+  .qualitiesContainer .heading .number{
+    color: #02431B;
+  }
+  .qualitiesContainer .heading p{
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 10px;
+  }
+  .qualitiesCardContainer{
+    width: 99%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly
+    ;
+    margin-top: 80px;
+  }
+  .qualitiesCard{
+    width: 176px;
+    height: 230px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.30);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+  }
+  .qualitiesCard svg{
+    font-size: 50px;
+  }
+  .qualitiesCard button{
+    background-color: transparent;
+    border: 0px;
+    outline: none;
+    cursor: pointer;
+  }
+  .qualitiesCard h4{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    
+  }
+
+  /* attorneysDemand */
+  .attorneysDemand{
+      margin: 0px auto;
+    margin-top: 140px;
+    display: flex;
+    width: 80%;
+    gap:100px;
+
+  }
+.attorneysDemand .left{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  flex: 2;
+}
+.attorneysDemand .left h1 {
+  font-size: 40px;
+}
+.attorneysDemand .left ul{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+}
+.attorneysDemand .left ul li {
+font-size: 18px;
+font-style: normal;
+font-weight: 400;
+}
+.attorneysDemand .left button{
+width: fit-content;
+padding: 13px 41.7px 12.98px 40px;
+color: #02431B;
+border-radius: 3px;
+border: 1px solid #02431B;
+background-color: transparent;
+font-weight: bolder;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+cursor: pointer;
+}
+.attorneysDemand .right{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  flex: 1;
+
+}
+.attorneysDemand .right .user{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.attorneysDemand .right .user h3{
+  font-size: 26px;
+  font-family: 'Inter',sans-serif;
+  font-weight: 600;
+}
+.attorneysDemand .right .user svg{
+  font-size: 20px;
+  margin-top: 3px;
+}
+.attorneysDemand .right .user b{
+  font-family: sans-serif;
+  font-weight: 600;
+}
+
+
+
+/* pricing */
+.pricing{
+  background-color: #02431B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: 'Inter';
+  padding: 100px 0px;
+  }
+
+.pricingContainer{
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  margin: 0px auto;
+  align-items: center;
+}  
+
+.pricingContainer .left img{
+  width: 80%;
+  height: 100%;
+}
+.pricingContainer .right{
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+.pricingContainer .right h1 {
+  color: #FFF;
+font-family: 'Inter';
+font-size: 30px;
+font-style: normal;
+font-weight: bolder;
+}
+.pricingContainer ul{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pricingContainer button{
+  width: fit-content;
+  padding: 13px 41.7px 12.98px 40px;
+  color:white;
+  border-radius: 3px;
+  border: 1px solid #ffff;
+  background-color: transparent;
+  font-weight: bolder;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+}
+
+/* legalWork */
+.legalWork{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0px;
+}
+.legalWorkContainer{
+  display: flex;
+align-items: center;  
+gap: 20px;
+flex-wrap: wrap;
+}
+.legalWorkContainer .left {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  font-family: 'Inter',sans-serif;
+}
+.legalWorkContainer ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.legalWorkContainer .left button{
+  width: fit-content;
+padding: 13px 41.7px 12.98px 40px;
+color: #02431B;
+border-radius: 3px;
+border: 1px solid #02431B;
+background-color: transparent;
+font-weight: bolder;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+cursor: pointer;
+}
+.legalWorkContainer .left h1{
+  font-size: 40px;
+  font-weight: bolder;
+}
+.legalWorkContainer .right {
+  width: 520px;
+  height: 350px;
+}
+.legalWorkContainer .right img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+
+.legalWork1{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0px;
+}
+.legalWorkContainer1{
+  display: flex;
+  align-items: center;  
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.legalWorkContainer1 .left{
+  width: 500px;
+}
+.legalWorkContainer1 .left img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+} 
+.legalWorkContainer1 .right{
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: 'Inter',sans-serif;
+}
+.legalWorkContainer1 .right p{
+  font-weight: 400;
+line-height: 28.571px; /* 158.73% */
+}
+.legalWorkContainer1 .right button{
+  width: fit-content;
+padding: 13px 41.7px 12.98px 40px;
+color: #02431B;
+border-radius: 3px;
+border: 1px solid #02431B;
+background-color: transparent;
+font-weight: bolder;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+cursor: pointer;
+}
+
+#buttonContainers{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Inter',sans-serif;
+  gap: 20px;
+  padding: 60px 0px;
+}
+#buttonContainers button{
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+background: #02431B;
+color: white;
+padding: 15px 25px;
+}
+
+
+@media screen and (max-width:786px) {
+  .heroContainer h1{
+    font-size: 30px;
+  }
+  .heroContainer p{
+    font-size:14px !important ;
+  }
+  .popularContainer{
+    grid-template-columns: repeat(3,1fr);
+  }
+  .qualitiesCardContainer{
+    gap: 30px;
+    
+  }
+  .attorneysDemand{
+    flex-direction: column;
+  }
+  .attorneysDemand .right{
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .attorneysDemand .right .user {
+    gap: 2px;
+  }
+  .attorneysDemand .right .user h3{
+    font-size: 13px;
+  }
+  .attorneysDemand .right .user svg{
+    font-size: 14px;
+  }
+  .attorneysDemand .right .user .details b{
+    font-size: 10px;
+  }
+  .attorneysDemand .right .user .details p{
+    font-size: 10px;
+  }
+  .legalWork .right{
+    width: 250px;
+    height: 300px;
+  }
+  .legalWork1 .left {
+    width: 250px;
+  }
+  .heroBtns button{
+    font-size: 10px;
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width:786px) {
+  .legalWorkContainer{
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+
+  }
+  .legalWork {
+    padding: 40px;
+  }
+  .legalWork1{
+    padding: 40px;
+  }
+  .legalWork1 .legalWorkContainer1{
+    justify-content: center;
+    align-items: center;
+  }
+  .legalWorkContainer1 img {
+    height: 100px ;
+    object-fit: cover;
+  }
+  .pricingContainer{
+    flex-direction: column;
+    gap: 50px;
+  }
+.pricing  .pricingContainer{
+    display: flex ;
+    flex-direction: column ;
+    justify-content: center ;
+    align-items: center ;
+    text-align: center;
+  }
+  .pricing .pricingContainer .right button{
+    margin: 0px auto;
+  }
+  .pricing .pricingContainer .right ul{
+    list-style-type:none ;
+  }
+}
+
+
+@media screen and (max-width:616px) {
+  .attorneysDemand .right {
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: 
+    space-evenly;
+  }
+  .attorneysDemand .left h1 {
+    font-size: 30px;
+  }
+  .pricingContainer .right h1{
+    font-size: 23px;
+
+  }
+  
+  .legalWorkContainer .left h1{
+    font-size: 25px;
+  }
+  .legalWorkContainer1 .right h1{
+    font-size: 25px;
+  }
+.legalWork1{
+  margin: 0px 20px;
+}  
+#buttonContainers{
+  font-size: 10px;
+}
+}
+
+@media screen and (max-width:555px) {
+  .popularContainer{
+    grid-template-columns: repeat(2,1fr);
+  }
+}

@@ -1,0 +1,17 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+
+.green{
+  color: #02431B;
+
+}
+
+body{
+  overflow-x: hidden;
+  width: 100vw;
+  height: 100%;
+}
