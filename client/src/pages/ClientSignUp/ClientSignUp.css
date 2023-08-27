@@ -1,0 +1,27 @@
+
+.btn-Cl,
+.btn-La{
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+}
+.btn-Cl{
+    background-color:#0366ffff;
+    border: 3px solid #0366ffff;
+    color: rgb(255, 255, 255);
+}
+.btn-La{
+    background-color: rgb(255, 255, 255);
+    border: 3px solid #02431bff;
+    color:#02431bff;
+}
+.btn-La:hover{
+    background-color: #02431bff;
+    border: 3px solid #02431bff;
+    color:rgb(255, 255, 255);
+    transition: 0.2s;
+}

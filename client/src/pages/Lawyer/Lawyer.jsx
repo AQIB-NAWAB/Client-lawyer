@@ -8,15 +8,16 @@ import { Link } from 'react-router-dom'
 import "./Lawyer.css"
 
 const Lawyer = () => {
+  
   return (
   <div className='client-dash'>
     <div className="left-dashboard">
         <h3>Dashboard</h3>
         <div className="client-link">
         <ul>
-        <li><Link to="/profile"><BsPerson/>Profile</Link></li>
-        <li><Link to="/search"><LiaEnvelopeOpenTextSolid/>Request</Link></li>
-        <li><Link to="/myjobs"><PiUsersThreeFill/>Clients</Link></li>
+        <li><Link to="/lawyer/profile" className='bold'><BsPerson/>Profile</Link></li>
+        <li><Link to="/lawyer/request"><LiaEnvelopeOpenTextSolid/>Request</Link></li>
+        <li><Link to="/lawyer/clients"><PiUsersThreeFill/>Clients</Link></li>
     </ul>
         </div>
     </div>
@@ -59,38 +60,52 @@ const Lawyer = () => {
     </div>
     </div>
     <div className="past-work">
-        <span className='header'><h1>Past Work</h1><FaPlus className='pencil'/></span>
+        <span className='header'><h1>Education</h1><FaPlus className='pencil'/></span>
     <div className="works-container">
         <span className="work">
-        <p>Case Date:</p>
-        <p>Case Type:</p>
-        <p>Court:</p>
+        <p>Qualification:</p>
+        <p>Institute:</p>
+        <p>Graduation Year:</p>
         </span>
 
 
         <span className="work">
-        <p>Case Date:</p>
-        <p>Case Type:</p>
-        <p>Court:</p>
+        <p>Qualification:</p>
+        <p>Institute:</p>
+        <p>Graduation Year:</p>
         </span>
     </div>
     </div>
 
+    <div className="past-work">
+        <span className='header'><h1>Certificates</h1><FaPlus className='pencil'/></span>
     <div className="works-container">
         <span className="work">
-        <p>Case Date:</p>
-        <p>Case Type:</p>
-        <p>Court:</p>
+        <p>Institute:</p>
+        <p>Graduation Year:</p>
         </span>
 
 
         <span className="work">
-        <p>Case Date:</p>
-        <p>Case Type:</p>
-        <p>Court:</p>
+        <p>Institute:</p>
+        <p>Graduation Year:</p>
         </span>
+
+
     </div>
-    
+    </div>
+
+    <div className="past-work">
+        <span className='header'><h1>Services</h1><FaPlus className='pencil'/></span>
+    <div className="works-container">
+        <span className="work">
+        <p></p>
+        <p></p>
+        </span>
+
+
+    </div>
+    </div>
 
     </section>
     </section>

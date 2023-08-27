@@ -1,0 +1,141 @@
+/* LawyerLogin.css */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0; 
+  }
+  
+  .login-page {
+    background-color: #ffffff; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+    min-height: 40rem;
+    width: 35rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+.login-page h1{
+    padding-top: 30px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.251);
+    padding: 10px 200px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.login-btn{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+.login-btn button{
+    padding: 15px 40px;
+}
+.btn-C,
+.btn-L {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+}
+.btn-C{
+    background-color: white;
+    border: 3px solid #0366ffff;
+    color: #0366ffff;
+}
+.btn-C:hover{
+    background-color: #0366ffff;
+    color: white;
+    transition: 0.2s;
+}
+.btn-L{
+    background-color: #02431bff;
+    border: 3px solid #02431bff;
+    color: white;
+}
+.login-inputs p{
+    padding-bottom: 3px;
+    font-size: 20px;
+    font-weight: 540;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.login-inputs{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.login-inputs input{
+    background-color: #e5e5e5;
+    width: 20rem;
+    height: 3rem;
+    padding: 0px 15px; 
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+.login-L{
+    background-color: #02431bff;
+    color: white;
+    height: 4rem;
+    width: 15rem;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 25px 0px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+.login-L:hover{
+    background-color: white;
+    color: #02431bff;
+    transition: 0.5s;
+}
+.login-footer{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    padding: 15px 80px;
+    border-top: 1px solid rgba(0, 0, 0, 0.224);
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 520;
+}
+.link{
+    color: blue;
+    text-decoration: none;
+
+}
+@media screen and (max-width:414px){
+    .login-btn{
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+    .login-btn button{
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+    .login-page {
+        width: 23rem;
+    }
+    .login-page h1{
+        padding: 20px 110px;
+    }
+    .login-footer{
+        display: flex;
+        flex-direction: row;
+        font-size: 15px;
+        font-weight: 500;
+        padding: 15px 30px;
+
+    }
+    
+}

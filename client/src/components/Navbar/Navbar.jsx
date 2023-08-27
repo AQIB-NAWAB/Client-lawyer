@@ -12,8 +12,8 @@ const Navbar = () => {
 <div className="nav_links">
     <ul>
         <li><Link to="/about">About</Link></li>
-        <li><Link to="/lawyers">For Lawyers</Link></li>
-        <li><Link to="/login">Login</Link></li>
+        <li><Link to="/lawyers-login">For Lawyers</Link></li>
+        <li><Link to="/client-login">Login</Link></li>
 
 
     </ul>
