@@ -10,6 +10,7 @@ import LaywerLogin from './pages/LawyerLogin/LaywerLogin'
 import ClientLogin from './pages/ClientLogin/ClientLogin'
 import LawyerSignUp from './pages/LawyerSignUp/LawyerSignUp'
 import ClientSignUp from './pages/ClientSignUp/ClientSignUp'
+import Search from './components/Search/Search'
 
 const App = () => {
   return (
@@ -19,6 +20,8 @@ const App = () => {
 
       <Route path='/' element={<Home/>} />
       <Route path='/client' element={<Client/>} />
+      <Route path='/client/profile' element={<Client/>} />
+      <Route path='/client/search' element={<Search/>} />
       <Route path='/lawyer' element={<Lawyer/>} />
       <Route path='/lawyer/profile' element={<Lawyer/>} />
       <Route path='/lawyer/request' element={<ClientRequest/>} />
@@ -26,11 +29,6 @@ const App = () => {
       <Route path='/client-login' element={<ClientLogin/>} />
       <Route path='/lawyer-signUp' element={<LawyerSignUp/>} />
       <Route path='/client-signUp' element={<ClientSignUp/>} />
-
-
-
-
-
 
     </Routes>
     <Footer/>

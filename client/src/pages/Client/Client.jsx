@@ -13,9 +13,9 @@ const Client = () => {
         <h3>Dashboard</h3>
         <div className="client-link">
         <ul>
-        <li><Link to="/profile"><BsPerson/>Profile</Link></li>
-        <li><Link to="/search"><BiSearchAlt/>Search</Link></li>
-        <li><Link to="/myjobs"><MdOutlinePersonSearch/>My Jobs</Link></li>
+        <li><Link to="/client/profile" className='bold'><BsPerson/>Profile</Link></li>
+        <li><Link to="/client/search"><BiSearchAlt/>Search</Link></li>
+        <li><Link to="/client/myjobs"><MdOutlinePersonSearch/>My Jobs</Link></li>
     </ul>
         </div>
     </div>
