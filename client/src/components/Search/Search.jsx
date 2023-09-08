@@ -8,11 +8,14 @@ import {MdOutlinePersonSearch} from "react-icons/md"
 import {BsSearch} from "react-icons/bs"
 import { FaTimes } from 'react-icons/fa'
 import {BsFilterRight} from "react-icons/bs"
+import ClientNavbar from '../ClientNavbar/ClientNavbar'
 
 
 const Search = () => {
   const[showFilters,setShowFilters]=useState(false);
   return (
+    <>
+    <ClientNavbar/>
     <div className='client-dash'>
     <div className="left-dashboard">
         <h3>Dashboard</h3>
@@ -214,6 +217,7 @@ const Search = () => {
     </div>
 
   </div>
+  </>
   )
 }
 

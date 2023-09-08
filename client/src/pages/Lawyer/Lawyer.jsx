@@ -6,10 +6,13 @@ import {PiUsersThreeFill} from "react-icons/pi"
 import {PiPencilLight} from "react-icons/pi"
 import { Link } from 'react-router-dom'
 import "./Lawyer.css"
+import LawyerNavbar from '../../components/LawyerNavbar/LawyerNavbar'
 
 const Lawyer = () => {
   
   return (
+    <>
+    <LawyerNavbar/>
   <div className='client-dash'>
     <div className="left-dashboard">
         <h3>Dashboard</h3>
@@ -113,6 +116,7 @@ const Lawyer = () => {
     </div>
 
   </div>
+  </>
   )
 }
 

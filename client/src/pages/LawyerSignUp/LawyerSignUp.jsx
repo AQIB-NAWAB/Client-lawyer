@@ -1,9 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import "./LawyerSignUp.css"
+import LoginNavbar from '../../components/LoginSignUpNavbar/LoginNavbar'
 
 const LawyerSignUp = () => {
   return (
+    <>
+    <LoginNavbar/>
     <div className="login-container">
         <div className="signup-page">
            <h1>Sign Up</h1>
@@ -90,6 +93,7 @@ const LawyerSignUp = () => {
 
         </div>
     </div>
+    </>
   )
 }
 

@@ -51,6 +51,7 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border: 1px solid rgba(0, 0, 0, 0.317);
     border-radius: 10px;
+    cursor: pointer;
 }
 .request-content p{
     justify-content: center;
@@ -92,6 +93,114 @@
         border-right: none;
     }
 }
+.request-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border: 1px solid black;
+  }
+  
+  .request-detail-container {
+    display: flex;
+    background-color: white;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 700px;
+    height: fit-content;
+    animation: fadeInUp 0.5s ease;
+  }
+  
+  .request-left-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-right: 1px solid rgba(0, 0, 0, 0.221);
+    padding-right: 15px;
+  }
+  .request-left-detail>:nth-child(1){
+    font-weight: 600;
+    font-size: 20px;
+  }
+  .request-left-detail>:nth-child(5){
+    font-weight: 600;
+    font-size: 20px;
+  }
+  .request-right-detail {
+    flex: 1;
+    padding-left: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .describe-offer {
+  }
+  .describe-offer textarea{
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    background-color: #d9d9d9ff;
+    color: black;
+    outline: none;
+    resize: none;
+  }
+  .btn-send-offer{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+
+  }
+  
+  .send-btn{
+    padding: 12px 30px;
+    border: 1px solid #02431bff;
+    background-color: #02431bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+  }
+  .send-btn:hover{
+    background-color: rgb(3, 61, 25);
+    transition: 0.1s ease;
+  }
+  .cancel-btn {
+    padding: 10px 25px;
+    border: 1px solid #02431bff;
+    background-color: rgb(255, 255, 255);
+    color: #02431bff;
+    cursor: pointer;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .cancel-btn:hover{
+    background-color: rgba(217, 217, 217, 0.306);
+    transition: 0.2s ease;
+  }
+  @keyframes fadeInUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
 @media screen and (max-width:414px) {
     .right-request{
         width: 24rem;
@@ -118,5 +227,18 @@
         justify-content: center;
         font-size: 6px;
         gap: 1.5rem;
+    }
+    .request-detail-container{
+        display: flex;
+        flex-direction: column;
+    }
+    .request-left-detail{
+        border-right: none;
+        padding-right: 0px;
+        border-bottom:1px solid rgba(0, 0, 0, 0.336);
+        padding-bottom: 5px;
+    }
+    .request-right-detail{
+        padding-left: 0px;
     }
 }

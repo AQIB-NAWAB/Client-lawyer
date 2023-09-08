@@ -36,7 +36,8 @@
 }
 .lawyer-detail{
     max-height: 580px; /* Set the desired maximum height for the scrollable area */
-    overflow: scroll;    /* Enable scrolling when content overflows */
+    overflow: scroll;
+    padding-bottom: 100px;    /* Enable scrolling when content overflows */
 
 
 }
@@ -45,11 +46,22 @@
         max-height: 450px; /* Set the desired maximum height for the scrollable area */
         overflow: scroll;    /* Enable scrolling when content overflows */
     } 
+    .detail-btn ul{
+        gap: 15px;
+        border-right: none;
+    }
 }
 @media screen and (max-width:414px) {
     .lawyer-detail{
         max-height: 400px; /* Set the desired maximum height for the scrollable area */
         overflow: scroll;    /* Enable scrolling when content overflows */
     } 
+    .works-container .work{
+        gap:20px;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
    

@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {BsPerson} from "react-icons/bs"
 import {LiaEnvelopeOpenTextSolid} from "react-icons/lia"
 import {PiUsersThreeFill} from "react-icons/pi"
 import { Link } from 'react-router-dom'
 import "./ClientRequest.css"
+import LawyerNavbar from '../LawyerNavbar/LawyerNavbar'
+import ClientDetailModel from './ClientDetailModel'
 
 const ClientRequest = () => {
+    const[showModel,setShowModel]=useState(false);
+
+    
   return (
+    <>
+    <LawyerNavbar/>
   <div className='client-dash'>
     <div className="left-dashboard">
         <h3>Dashboard</h3>
@@ -30,14 +37,15 @@ const ClientRequest = () => {
                 <h3>Budget</h3>
             </div>
             <section className='scroll'>
-            <section className='request-content-section'>
-            <div className="request-content">
+            <section className='request-content-section' >
+            <div className="request-content"  onClick={()=>setShowModel(true)}>
                 <p>8/20/2023 </p>
                 <p>QAMAR </p>
                 <p>Family Law </p>
                 <p>10 </p>
                 <p>30,000 PKR </p>
             </div>
+            {showModel && <ClientDetailModel setShowModel={setShowModel} />}
             </section>
 
             <section className='request-content-section'>
@@ -52,12 +60,13 @@ const ClientRequest = () => {
 
 
             <section className='request-content-section'>
-            <div className="request-content">
+            <div className="request-content" >
                 <p>8/20/2023</p>
                 <p>QAMAR</p>
                 <p>Family Law</p>
                 <p>10</p>
                 <p>30,000 PKR</p>
+                
             </div>
             </section>
 
@@ -113,6 +122,7 @@ const ClientRequest = () => {
         </section>
     </div>
     </div>
+    </>
   )}
 
     export default ClientRequest

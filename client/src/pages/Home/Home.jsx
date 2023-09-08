@@ -4,9 +4,11 @@ import {BsBuildingsFill,BsRocketTakeoffFill,BsHouseFill} from "react-icons/bs"
 import {MdStoreMallDirectory} from "react-icons/md"
 import {FaStar, FaUserAlt} from "react-icons/fa"
 import { Link } from 'react-router-dom';
+import Navbar from '../../components/Navbar/Navbar';
 const Home = () => {
   return (
     <>
+    <Navbar/>
 
     <div className="hero">
     <div className="overlay">

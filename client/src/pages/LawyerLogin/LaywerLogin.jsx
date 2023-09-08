@@ -1,9 +1,12 @@
 import React from 'react'
 import "./LawyerLogin.css"
 import { Link } from 'react-router-dom'
+import LoginNavbar from '../../components/LoginSignUpNavbar/LoginNavbar'
 
 const LaywerLogin = () => {
   return (
+    <>
+    <LoginNavbar/>
     <div className="login-container">
         <div className="login-page">
            <h1>Log In</h1>
@@ -32,6 +35,7 @@ const LaywerLogin = () => {
 
         </div>
     </div>
+    </>
   )
 }
 

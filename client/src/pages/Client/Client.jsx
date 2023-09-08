@@ -5,9 +5,12 @@ import {MdOutlinePersonSearch} from "react-icons/md"
 import {PiPencilLight} from "react-icons/pi"
 import "./Client.css"
 import { Link } from 'react-router-dom'
+import ClientNavbar from '../../components/ClientNavbar/ClientNavbar'
 
 const Client = () => {
   return (
+    <>
+    <ClientNavbar/>
   <div className='client-dash'>
     <div className="left-dashboard">
         <h3>Dashboard</h3>
@@ -43,6 +46,7 @@ const Client = () => {
     </div>
 
   </div>
+  </>
   )
 }
 
