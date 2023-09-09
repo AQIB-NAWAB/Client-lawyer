@@ -12,6 +12,7 @@ import ClientSignUp from './pages/ClientSignUp/ClientSignUp'
 import Search from './components/Search/Search'
 import MyJobs from './components/MyJobs/MyJobs'
 import Clients from './components/Clients/Clients'
+import AdminPage from './pages/AdminPage/AdminPage'
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
       <Route path='/client-login' element={<ClientLogin/>} />
       <Route path='/lawyer-signUp' element={<LawyerSignUp/>} />
       <Route path='/client-signUp' element={<ClientSignUp/>} />
+      <Route path='/admin' element={<AdminPage/>} />
 
     </Routes>
     <Footer/>

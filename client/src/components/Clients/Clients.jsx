@@ -31,8 +31,8 @@ const Clients = () => {
         <div className="my-jobs">
             <div className="left-myjobs">
                 <h1>Sent Offers</h1>
-                <section className='offer-box-container'>
-                <div className="offer-box ab">
+                <section className='offer-box-container-ab'>
+                <div className="offer-box">
                     <span className='offer-box-headings'>
                         <p>"Client name"</p>
                         <p>Faimly Law</p>
@@ -49,7 +49,7 @@ const Clients = () => {
                 </div>
 
 
-                <div className="offer-box ab">
+                <div className="offer-box">
                     <span className='offer-box-headings'>
                         <p>"Client name"</p>
                         <p>Faimly Law</p>

@@ -13,7 +13,7 @@ const LawyerNavbar = () => {
 </div>
 <div className="nav_links">
     <ul>
-        <li><HiOutlineBell fontSize="30px"/></li>
+        <li><HiOutlineBell fontSize="40px"/></li>
         <li><BsPersonCircle className='navbar-person'/></li>
     </ul>
 </div>
