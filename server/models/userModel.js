@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
     },
   },
   practice_area:{
-    tyoe:"String",
+    type:String
   },
   role: {
     type: String,
@@ -129,13 +129,26 @@ const userSchema = new mongoose.Schema({
     }
   }
   ],
-  // Now the ineraction Feilds
   client_requests: [
     {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ClientRequest", // Reference to ClientRequest model
+    },
+  ],
+  lawyers_offers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "LawyerOffer", // Reference to LawyerOffer model
+    },
+  ],
+  my_clients:[
+    {
       client_id:mongoose.Schema.Types.ObjectId,
-      case_type: String,
-      budget: Number,
-      case_description: String,
+    }
+  ],
+  my_lawyers:[
+    {
+      lawyer_id:mongoose.Schema.Types.ObjectId,
     }
   ],
   createdAt:{

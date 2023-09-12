@@ -5,7 +5,9 @@ const sendToken = require("../utilis/jwtToken");
 const sendEmail = require('../utilis/sendEmail');
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
-
+const Request = require("../models/requestModel");
+const Offer = require("../models/offerModel");
+const Notification = require('../models/notificationModel')
 
 
 // register a user
@@ -367,22 +369,27 @@ exports.updateLawyerStatus = catchAsyncError (async (req,res,next)=>{
 });
 
 
-// Interaction Routes
-exports.sendRequest = async (req, res, next) => {
+// ... (previous code)
+
+// Send request to lawyer
+exports.sendRequest = catchAsyncError(async (req, res, next) => {
   try {
     const { case_type, budget, case_description } = req.body;
     const lawyerId = req.params.lawyerId;
 
-    const clientRequest = {
-      client_id:req.user.id,
+    // Create a new request
+    const request = await Request.create({
+      client_id: req.user.id,
+      lawyer_id: lawyerId,
       case_type,
       budget,
       case_description,
-    };
+    });
 
-    const updatedUser = await User.findByIdAndUpdate(
+    // Add the request to the lawyer's requests array
+    await User.findByIdAndUpdate(
       lawyerId,
-      { $push: { client_requests: clientRequest } },
+      { $push: { client_requests: request._id } },
       { new: true, useFindAndModify: false }
     );
 
@@ -395,6 +402,471 @@ exports.sendRequest = async (req, res, next) => {
       success: false,
       message: 'Error sending request',
       error: error.message,
+    });
+  }
+});
+
+// Get all requests of a lawyer
+exports.getAllRequests = catchAsyncError(async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id).populate('client_requests');
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found.',
+      });
+    }
+
+    // Extract relevant details for each request
+    const requestsWithClientDetails = user.client_requests.map((request) => {
+      return {
+        _id: request._id,
+        case_type: request.case_type,
+        budget: request.budget,
+        case_description: request.case_description,
+        client: {
+          name: user.name,
+          city: user.city,
+          province: user.province,
+          clientId:user._id
+        },
+      };
+    });
+
+    res.status(200).json({
+      success: true,
+      requests: requestsWithClientDetails,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+});
+
+// Send offer to client
+exports.sendOffer = catchAsyncError(async (req, res, next) => {
+  try {
+    const { description, rate, client_request_id } = req.body;
+    const { clientId } = req.params;
+
+    // Create a new offer
+    const offer = await Offer.create({
+      description,
+      rate,
+      lawyer_id: req.user._id,
+      client_request_id,
+    });
+
+    // Add the offer to the client's offers array
+    await User.findByIdAndUpdate(
+      clientId,
+      { $push: { lawyers_offers: offer._id } },
+      { new: true, useFindAndModify: false }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Offer sent successfully!',
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error sending offer',
+      error: error.message,
+    });
+  }
+});
+
+exports.sendCustomRequest = catchAsyncError(async (req, res, next) => {
+  const { city, province, description, budget, case_type } = req.body;
+
+  try {
+    // Find lawyers that match the criteria
+    const lawyers = await User.find({
+      role: 'lawyer',
+      city: city,
+      province: province,
+      practice_area: case_type,
+      status: 'approve', // Corrected 'approve' to 'approved'
+    });
+
+    // Create a single custom request
+    const customRequest = {
+      client_id: req.user._id,
+      case_type: case_type,
+      budget: budget,
+      case_description: description,
+    };
+
+    // Send the custom request to all matching lawyers
+    for (const lawyer of lawyers) {
+      customRequest.lawyer_id = lawyer._id;
+      await Request.create(customRequest);
+
+      // Add the request to the lawyer's requests array
+      await User.findByIdAndUpdate(
+        lawyer._id,
+        { $push: { client_requests: customRequest._id } },
+        { new: true, useFindAndModify: false }
+      );
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Custom requests sent to matching lawyers.',
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+      error: error.message, // Include the error message in the response for debugging
+    });
+  }
+});
+
+
+
+// Accept lawyer's offer
+exports.acceptOffer = catchAsyncError(async (req, res, next) => {
+  const offerId = req.params.offerId;
+  try {
+    // Find the offer and mark it as accepted
+    const offer = await Offer.findByIdAndUpdate(
+      offerId,
+      { accepted: true },
+      { new: true }
+    );
+
+    if (!offer) {
+      return res.status(404).json({
+        success: false,
+        message: 'Offer not found or you do not have permission to accept it.',
+      });
+    }
+
+    // Get the client request associated with the offer
+    const clientRequest = await Request.findById(offer.client_request_id);
+
+    if (!clientRequest) {
+      return res.status(404).json({
+        success: false,
+        message: 'Client request not found for this offer.',
+      });
+    }
+
+    // Close the client request
+    clientRequest.status = 'closed';
+    await clientRequest.save();
+
+    // Remove the client request from other lawyers
+    await Request.deleteMany({
+      _id: { $ne: clientRequest._id },
+      client_id: clientRequest.client_id,
+    });
+
+    // Update the client and lawyer's relationships
+    const clientUser = await User.findById(clientRequest.client_id);
+    const lawyerUser = await User.findById(offer.lawyer_id);
+
+    clientUser.my_lawyers.push({ lawyer_id: lawyerUser._id });
+    lawyerUser.my_clients.push({ client_id: clientUser._id });
+
+    await clientUser.save();
+    await lawyerUser.save();
+
+    const notificationText = `Your offer for ${clientRequest.case_type} has been accepted by ${clientUser.name}.`;
+    
+    await Notification.create({
+      user_id: lawyerUser._id,
+      text: notificationText,
+    });
+    res.status(200).json({
+      success: true,
+      message:
+        'Offer accepted successfully, and request closed and removed from other lawyers.',
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+});
+
+// Get all sent offers of lawyers
+
+exports.getAllSentLawyerOffers = async (req, res, next) => {
+  try {
+    // Find the lawyer offers
+    const lawyerOffers = await Offer.find({ lawyer_id: req.user._id,accepted:false }).exec();
+
+    // Create an array to store the lawyer offers with client information
+    const lawyerOffersWithClientInfo = [];
+
+    for (const lawyerOffer of lawyerOffers) {
+      // Find the associated ClientRequest document using client_request_id
+      const clientRequest = await Request.findById(lawyerOffer.client_request_id);
+
+      if (clientRequest) {
+        // Find the client information from the User model using client_id
+        const client = await User.findById(clientRequest.client_id);
+
+        if (client) {
+          // Include the client information in the lawyer offer
+          const lawyerOfferWithClient = {
+            _id: lawyerOffer._id,
+            client_request_id: lawyerOffer.client_request_id,
+            lawyer_id: lawyerOffer.lawyer_id,
+            description: lawyerOffer.description,
+            rate: lawyerOffer.rate,
+            accepted: lawyerOffer.accepted,
+            case_type:clientRequest.case_type,
+            client_info: {
+              client_id: client._id,
+              name: client.name,
+              city: client.city,
+              province: client.province,
+              // Include other client information fields here as needed
+            },
+          };
+
+          lawyerOffersWithClientInfo.push(lawyerOfferWithClient);
+        }
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      lawyerOffers: lawyerOffersWithClientInfo,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+};
+
+
+// get all accepeted sent offers of a lawyers 
+exports.getAllAcceptedLawyerOffers = async (req, res, next) => {
+  try {
+    // Find the lawyer offers
+    const lawyerOffers = await Offer.find({ lawyer_id: req.user._id,accepted:true }).exec();
+
+    // Create an array to store the lawyer offers with client information
+    const lawyerOffersWithClientInfo = [];
+
+    for (const lawyerOffer of lawyerOffers) {
+      // Find the associated ClientRequest document using client_request_id
+      const clientRequest = await Request.findById(lawyerOffer.client_request_id);
+
+      if (clientRequest) {
+        // Find the client information from the User model using client_id
+        const client = await User.findById(clientRequest.client_id);
+
+        if (client) {
+          // Include the client information in the lawyer offer
+          const lawyerOfferWithClient = {
+            _id: lawyerOffer._id,
+            client_request_id: lawyerOffer.client_request_id,
+            lawyer_id: lawyerOffer.lawyer_id,
+            description: lawyerOffer.description,
+            rate: lawyerOffer.rate,
+            accepted: lawyerOffer.accepted,
+            case_type:clientRequest.case_type,
+            client_info: {
+              client_id: client._id,
+              name: client.name,
+              city: client.city,
+              province: client.province,
+              // Include other client information fields here as needed
+            },
+          };
+
+          lawyerOffersWithClientInfo.push(lawyerOfferWithClient);
+        }
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      lawyerOffers: lawyerOffersWithClientInfo,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+};
+
+
+
+// Function to get all sent requests by a client
+exports.getAllSentRequestsByClient = async (req, res, next) => {
+  try {
+    // Find all client requests created by the current client (user)
+    const clientRequests = await Request.find({ client_id: req.user._id }).exec();
+
+    // Create an array to store the sent requests with lawyer information
+    const sentRequests = [];
+
+    for (const clientRequest of clientRequests) {
+      // Find the associated lawyer information from the User model using lawyer_id
+      const lawyer = await User.findById(clientRequest.lawyer_id);
+
+      if (lawyer) {
+        // Include the lawyer information in the sent request
+        const sentRequestWithLawyer = {
+          _id: clientRequest._id,
+          client_id: clientRequest.client_id,
+          lawyer_id: clientRequest.lawyer_id,
+          case_type: clientRequest.case_type,
+          budget: clientRequest.budget,
+          case_description: clientRequest.case_description,
+          lawyer_info: {
+            lawyer_id: lawyer._id,
+            name: lawyer.name,
+            city: lawyer.city,
+            province: lawyer.province,
+            // Include other lawyer information fields here as needed
+          },
+        };
+
+        sentRequests.push(sentRequestWithLawyer);
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      sentRequests: sentRequests,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+};
+
+
+
+
+
+
+// Get and display all return offers from lawyers for any client request
+exports.getAllReturnOffers = catchAsyncError(async (req, res, next) => {
+  try {
+    const returnOffers = await Offer.find({ accepted: true }).populate([
+      {
+        path: 'client_request_id',
+        populate: { path: 'client_id', select: 'name city province' }, // Populate client information
+      },
+      { path: 'lawyer_id', select: 'name city province practice_area' }, // Populate lawyer name
+    ]);
+
+    res.status(200).json({
+      success: true,
+      returnOffers,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+});
+
+
+
+
+// Get all notifications for a user
+exports.getAllNotifications = async (req, res, next) => {
+  try {
+    const userId = req.user._id; // Get the user's ID from the request
+
+    const notifications = await Notification.find({ user_id: userId }).sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      notifications,
+    });
+  } catch (error) {
+    console.error('Error getting notifications:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+};
+
+// Delete a single notification
+exports.deleteNotification = async (req, res, next) => {
+  try {
+    const notificationId = req.params.notificationId;
+
+    // Check if the notification belongs to the user
+    const userId = req.user._id; // Get the user's ID from the request
+    const notification = await Notification.findById(notificationId);
+
+    if (!notification) {
+      return res.status(404).json({
+        success: false,
+        message: 'Notification not found.',
+      });
+    }
+
+    if (notification.user_id.toString() !== userId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: 'You do not have permission to delete this notification.',
+      });
+    }
+
+    // Delete the notification
+    await Notification.findByIdAndDelete(notificationId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Notification deleted successfully.',
+    });
+  } catch (error) {
+    console.error('Error deleting notification:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+};
+
+// Delete all notifications for a user
+exports.deleteAllNotifications = async (req, res, next) => {
+  try {
+    const userId = req.user._id; // Get the user's ID from the request
+
+    // Delete all notifications for the user
+    await Notification.deleteMany({ user_id: userId });
+
+    res.status(200).json({
+      success: true,
+      message: 'All notifications deleted successfully.',
+    });
+  } catch (error) {
+    console.error('Error deleting all notifications:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
     });
   }
 };

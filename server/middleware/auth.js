@@ -36,3 +36,14 @@ exports.authorizeRoles = (...roles) => {
     next();
   };
 };
+
+exports.checkApprovedStatus=(req, res, next)=> {
+  if (req.user.status !== "approve") {
+    return res.status(403).json({
+      success: false,
+      message: "Access denied. Your status is not approved.",
+    });
+  }
+  next();
+}
+

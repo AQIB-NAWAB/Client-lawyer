@@ -18,8 +18,21 @@ const {
   updateLawyerStatus,
   searchLawyers,
   sendRequest,
+  getAllRequests,
+  sendOffer,
+  sendCustomRequest,
+  acceptOffer,
+  getLawyerSentOffers,
+  getAllLawyerOffers,
+  getAllAcceptedLawyerOffers,
+  getAllSentLawyerOffers,
+  getAllSentRequestsByClient,
+  getAllReturnOffers,
+  deleteAllNotifications,
+  deleteNotification,
+  getAllNotifications,
 } = require("../controller/userController");
-const { isAuthebticatedUser, authorizeRoles } = require("../middleware/auth");
+const { isAuthebticatedUser, authorizeRoles,checkApprovedStatus } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -45,7 +58,7 @@ router
 
 router
   .route("/user/:id")
-  .get(isAuthebticatedUser, getSingleUser)
+  .get( getSingleUser)
   // .put(isAuthebticatedUser, authorizeRoles("admin"), updateUserRole)
   // .delete(isAuthebticatedUser, authorizeRoles("admin"), deleteUser);
 
@@ -57,10 +70,45 @@ router.route("/admin/lawyers/pending").get(isAuthebticatedUser,authorizeRoles("a
 
 router.route("/admin/lawyer/status").put(isAuthebticatedUser,authorizeRoles("admin"),updateLawyerStatus)
 
-router.route("/search/lawyers").get(isAuthebticatedUser,searchLawyers)
+router.route("/search/lawyers").get(searchLawyers)
 
 
 // Interaction Routes
 router.route("/send-request/:lawyerId").post(isAuthebticatedUser,sendRequest)
+// Lawyer sending offer to client 
+router.route("/send-offer/:clientId").post(isAuthebticatedUser,checkApprovedStatus,sendOffer)
+
+// Get All request of a clients to a lawyer
+router.route("/lawyers/requests").get(isAuthebticatedUser,checkApprovedStatus,getAllRequests)
+
+
+// Custom Send Request to All 
+router.route("/custom/send-custom-request/").post(isAuthebticatedUser,sendCustomRequest)
+
+// Accept Lawyer Offer 
+router.route("/accept-offer/:offerId").post(isAuthebticatedUser,acceptOffer)
+
+// Get all offers sent by a lawyer
+router.route('/lawyers/sent/offers').get(isAuthebticatedUser,checkApprovedStatus,getAllSentLawyerOffers );
+
+
+// Get all offers Accpeted of a lawyer
+router.route('/lawyers/accepted/offers').get(isAuthebticatedUser,checkApprovedStatus,getAllAcceptedLawyerOffers );
+
+// Get all sent requests by a client
+router.route('/client/sent-requests').get(isAuthebticatedUser, getAllSentRequestsByClient);
+router.route('/client/return-requests').get(isAuthebticatedUser, getAllReturnOffers);
+
+
+
+// Get all notifications for a user
+router.get('/notifications',isAuthebticatedUser, getAllNotifications);
+
+// Delete a single notification by ID
+router.delete('/notifications/:notificationId',isAuthebticatedUser, deleteNotification);
+
+// Delete all notifications for a user
+router.delete('/notifications', isAuthebticatedUser,deleteAllNotifications);
+
 
 module.exports = router;
