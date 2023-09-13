@@ -1,0 +1,212 @@
+.client-dash{
+    margin-top: 10vh;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+.left-dashboard{
+    height: fit-content;
+    width: 13rem;
+    border: 1px solid rgba(0, 0, 0, 0.559);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.292);
+}
+.left-dashboard h3{
+    font-size: 30px;
+    font-weight: 500;
+    padding-top: 10px;
+    border-bottom:0.5px solid lightgrey;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.client-link{
+    font-size: 20px;
+}
+.client-link ul li{
+    list-style-type: none;
+    padding: 20px 0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.client-link ul li a{
+    display: flex;
+    align-items: center;
+    border-bottom: 0.5px solid lightgrey;
+    list-style-type: none;
+    text-decoration: none;
+    color: black;
+}
+.client-link ul li svg{
+    font-size: 30px;
+}
+.client-link ul li a svg{
+    font-weight: lighter;
+    display: flex;
+    width: 70px;
+}
+.right-dashboard{
+    height: 40rem;
+    width: 60rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    overflow: hidden;
+    
+}
+.head{
+    padding: 20px 40px;
+    display: flex;
+}
+.head svg{
+    width: 40px;
+}
+.person{
+    font-size: 55px;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+
+}
+.head h1{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.pencil{
+    background-color:#5EAC24 ;
+    color: white;
+    border-radius: 50%;
+    padding: 3px;
+}
+.detail-btn{
+    padding: 20px 0px;
+    padding-left: 10px;
+    padding-right: 40px;
+    position: relative;
+    border-right: 1px solid black;
+    width: fit-content;
+    height: 73vh;
+    min-width: 200px;
+}
+.detail-btn ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style-type: none;
+}
+.detail-btn ul li{
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;   
+}
+.detail-btn .pencil{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.dash-container{
+    display: flex;
+    gap: 10px;
+}
+.description{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1px solid black;
+    height: fit-content;
+}
+.description .header{
+    display: flex;
+    justify-content: space-between;
+}
+.description h1{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.description p{
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+@media screen and (max-width : 786px) {
+    .client-dash{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .left-dashboard{
+        flex-direction: row;
+        width: fit-content;
+        padding: 10px 40px;
+        align-items: center;
+    }
+    .left-dashboard ul{
+        display: flex;
+        flex-direction: row;
+    }
+    .left-dashboard h3{
+        padding: 0px;
+        font-size: 25px;
+    }
+    .dash-container{
+        flex-direction: column;
+        max-width: 100vw !important;
+        width: 100%;
+
+    }
+    .dash-container .detail-btn{
+        display: flex;
+        height: fit-content !important;
+        width: 100;
+    }
+    .detail-btn ul{
+        display: flex;
+        flex-direction: row;
+
+    }
+    .right-dashboard{
+        width: fit-content;
+        margin: 0px 10px;
+    }   
+}
+@media screen and (max-width: 414px) {
+    .left-dashboard{
+        flex-direction: column;
+        border: none;
+        box-shadow: none;
+    }
+    .left-dashboard .client-link ul li a{
+        font-size: 15px;
+    }
+    .left-dashboard .client-link ul{
+        gap: 20px;
+    }
+    .left-dashboard .client-link svg{
+        display: none;
+    }
+    .head h1{
+        font-size: 19px;
+    }
+    .person{
+        padding: 5px;
+        font-size: 30px;
+    }
+    .head .pencil{
+        font-size: 20px;
+        padding: 2px;
+        background-color: white;
+        color: #5EAC24;
+    }
+    .detail-btn ul{
+        flex-direction: column;
+    }
+    .detail-btn{
+        border-right: none;
+    }
+}

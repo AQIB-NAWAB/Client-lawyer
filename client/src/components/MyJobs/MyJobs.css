@@ -1,0 +1,166 @@
+.my-jobs{
+    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
+}
+.my-jobs-h1{
+    padding: 17px 0px;
+}
+.left-myjobs{
+    flex: 1;
+}
+.left-myjobs h1{
+    padding: 30px 50px; 
+    padding-bottom: 8px;
+    font-size: 30px;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    border-right: 1px solid black;
+
+}
+.right-myjobs h1{
+    padding: 30px 50px; 
+    padding-bottom: 8px;
+    font-size: 30px;
+    border-bottom: 1px solid black;
+}
+.case-box{
+    border: 1px solid rgba(0, 0, 0, 0.393);
+    padding: 10px;
+    border-radius: 10px;
+}
+.case-box-container{
+    padding: 30px 30px;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 430px;
+    overflow-y: scroll;
+}
+.case-heading{
+    font-weight: bolder;
+    padding-bottom: 7px;
+}
+.more-details{
+    display: flex;
+    padding-top: 66px;
+    gap: 10px;
+}
+.more-details span{
+    display: flex;
+    gap: 8px;
+}
+.bold-head{
+    font-weight: 500;
+}
+.right-myjobs{
+    flex: 1;
+    justify-content: center;
+}
+.offer-box-container{
+    padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 430px;
+    overflow-y: scroll;
+}
+.offer-box{
+    border: 1px solid rgba(0, 0, 0, 0.393);
+    padding: 10px;
+    border-radius: 10px;
+}
+.offer-box-headings{
+    display: flex;
+    font-weight: 600;
+}
+.offer-box-headings p{
+    border-right: 1px solid rgba(0, 0, 0, 0.306);
+    padding: 5px 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.301);
+}
+.offer-box-headings>:nth-child(1){
+    padding-left: 0px;
+}
+.offer-box-headings>:nth-child(4){
+    border-right: none;
+}
+.offer-box-p{
+    font-weight: 500;
+    padding: 10px 0px;
+}
+.offer-box-footer{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+.offer-box-footer span{
+    display: flex;
+    gap: 10px;
+    padding-top: 12px;
+}
+.offer-box-f{
+    font-weight: 500;
+}
+.offer-box-footer button{
+    background-color: #02431bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-weight: 550;
+    cursor: pointer;
+}
+@media screen and (max-width:786px) {
+    .case-box-container{
+        max-width: 350px;
+        padding: 30px 30px;
+        border-right: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        max-height: 430px;
+        overflow-y: scroll;
+    }
+    .left-myjobs h1{
+        border-right: none;
+    }
+    .offer-box-container{
+        width: 350px;
+    }
+    .more-details{
+        padding-top: 30px;
+        font-size: 12px;
+        gap: 7px;
+    }
+    .more-details span{
+        gap: 2px;
+    }
+    .bold-head{
+        font-weight: 500;
+    }
+    .offer-box-headings{
+        padding:0px;
+        font-size: 14px;
+        font-weight: 500;
+        gap: 0px;
+    }
+}
+@media screen and (max-width:414px) {
+
+    .my-jobs{
+        display: flex;
+        flex-direction: column;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+    .left-myjobs h1{
+        font-size: 24px;
+    }
+    .right-myjobs h1{
+        font-size: 24px;
+    }
+    .head h1{
+        font-size: 25px;
+    }
+}

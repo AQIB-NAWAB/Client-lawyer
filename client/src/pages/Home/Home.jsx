@@ -3,9 +3,12 @@ import "./Home.css";
 import {BsBuildingsFill,BsRocketTakeoffFill,BsHouseFill} from "react-icons/bs" 
 import {MdStoreMallDirectory} from "react-icons/md"
 import {FaStar, FaUserAlt} from "react-icons/fa"
+import { Link } from 'react-router-dom';
+import Navbar from '../../components/Navbar/Navbar';
 const Home = () => {
   return (
     <>
+    <Navbar/>
 
     <div className="hero">
     <div className="overlay">
@@ -18,12 +21,16 @@ const Home = () => {
         <p>Whether you need a one-time or an entire freelance legal department, Attorney network of experienced lawyers has covered </p>
       </span>
         <div className="heroBtns">
-          <button>
+            <Link to="/lawyer-signUp">
+            <button>
             Apply as Lawyer
-          </button>
-          <button>
+            </button>
+            </Link>
+            <Link to="/client-signUp">
+            <button>
             Apply as Client
-          </button>
+            </button>
+            </Link>
         </div>
     </div>
     </div>

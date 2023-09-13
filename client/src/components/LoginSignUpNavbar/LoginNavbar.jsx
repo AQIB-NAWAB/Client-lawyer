@@ -1,7 +1,7 @@
 import React from 'react'
-import "./Navbar.css"
 import { Link } from 'react-router-dom'
-const Navbar = () => {
+
+const LoginNavbar = () => {
   return (
     <nav>  
     <div className="navContainer">
@@ -11,9 +11,8 @@ const Navbar = () => {
 </div>
 <div className="nav_links">
     <ul>
-        <li><Link to="/lawyers-login">For Lawyers</Link></li>
-        <li><Link to="/client-login">Login</Link></li>
 
+        <li><Link to="/">Home</Link></li>
 
     </ul>
 </div>
@@ -22,4 +21,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default LoginNavbar
