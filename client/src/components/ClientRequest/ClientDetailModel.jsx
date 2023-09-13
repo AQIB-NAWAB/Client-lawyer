@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ClientRequest from './ClientRequest'
 
 const ClientDetailModel = ({setShowModel}) => {
@@ -6,7 +6,12 @@ const ClientDetailModel = ({setShowModel}) => {
      setShowModel(false)
 
   }
+  const [description,setDescription]=useState("")
+  const [price,setPrice]=useState(0)
 
+  const sendOffer=()=>{
+    alert("Offer" + description)
+  }
   return (
     <div className="request-wrap">
     <div className='request-detail-container'>
@@ -21,10 +26,10 @@ const ClientDetailModel = ({setShowModel}) => {
         <div className="request-right-detail">
             <p>Send Offer</p>
             <p>Describe Offer:</p>
-            <span className='describe-offer'><textarea name="" id="" cols="30" rows="5"></textarea></span>
-            <p>Hourly Rate :</p>
+            <span className='describe-offer'><textarea name="" id="" cols="30" rows="5" value={description} onChangeCapture={(e)=>setDescription(e.target.value)}></textarea></span>
+            <p>Hourly Rate : <input type="number" value={price} onChange={(e)=>setPrice(e.target.value)} className='rate-h'/></p>
             <span className='btn-send-offer'>
-                <button className='send-btn'>Send</button>
+                <button className='send-btn' onClick={()=>sendOffer()}>Send</button>
                 <button className='cancel-btn' onClick={()=>showMsg()}>Cancel</button>
             </span>
 

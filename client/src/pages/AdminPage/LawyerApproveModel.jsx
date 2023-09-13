@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const LawyerApproveModel = ({setShowApproveModel}) => {
     const cancel=()=>{
         setShowApproveModel(false)
     }
+    const [status,setStatus]=useState("")
+   const handelUpdate=()=>{
+    alert(status)
+   }
   return (
     <div className="request-wrap">
     <div className='request-detail-container'>
@@ -24,7 +28,7 @@ const LawyerApproveModel = ({setShowApproveModel}) => {
             
         <span>
               <p>Update Status:</p>
-              <select>
+              <select value={status} onChange={(e)=>setStatus(e.target.value)}>
                 <option value="city1">Select</option>
                 <option value="Approve">Approve</option>
                 <option value="Pending">Pending</option>
@@ -35,7 +39,7 @@ const LawyerApproveModel = ({setShowApproveModel}) => {
         </div>    
 
             <span className='btn-send-offer'>
-                <button className='send-btn'>Update</button>
+                <button className='send-btn' onClick={()=>handelUpdate()}>Update</button>
                 <button className='cancel-btn-lawyer-model' onClick={()=>cancel()}>Cancel</button>
             </span>
 

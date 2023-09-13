@@ -200,7 +200,14 @@
       opacity: 1;
     }
   }
-  
+.rate-h{
+  border: none;
+  border-radius: 7px;
+  width: 20%;
+  padding: 8px 5px ;
+  background-color: rgba(128, 128, 128, 0.406);
+  outline: none;
+}
 @media screen and (max-width:414px) {
     .right-request{
         width: 24rem;

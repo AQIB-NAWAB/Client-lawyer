@@ -1,73 +1,117 @@
-import React from 'react'
+import React, { useState } from 'react';
 
-const JobPostModel = ({setPostJob}) => {
-    const cancelbtn=()=>{
-        setPostJob(false)
-    }
+const JobPostModel = ({ setPostJob }) => {
+  const [city, setCity] = useState(''); // State for city selection
+  const [province, setProvince] = useState(''); // State for province selection
+  const [caseType, setCaseType] = useState(''); // State for case type selection
+  const [caseDescription, setCaseDescription] = useState(''); // State for case description input
+  const [budget, setBudget] = useState(''); // State for budget input
+
+  const cancelbtn = () => {
+    setPostJob(false);
+  };
+
+  const handlePostJob = () => {
+    // You can access the state values here and perform any necessary actions, such as posting the job.
+    console.log('City:', city);
+    console.log('Province:', province);
+    console.log('Case Type:', caseType);
+    console.log('Case Description:', caseDescription);
+    console.log('Budget:', budget);
+
+    // Perform any actions here...
+
+    // Close the job post modal
+    setPostJob(false);
+  };
 
   return (
     <div className="job-wrap">
-    <div className='job-post-container'>
+      <div className="job-post-container">
         <div className="left-job-post">
-            <h1>Enter job details</h1>
-            <div className='job-inputs'>
+          <h1>Enter job details</h1>
+          <div className="job-inputs">
             <span>
               <p>City:</p>
-              <select>
-                <option value="city1">Select city</option>
-                <option value="city1">Lahore</option>
-                <option value="city2">Karachi</option>
-                <option value="city3">Islambad</option>
+              <select
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              >
+                <option value="">Select city</option>
+                <option value="Lahore">Lahore</option>
+                <option value="Karachi">Karachi</option>
+                <option value="Islamabad">Islamabad</option>
+                {/* Add more city options */}
               </select>
             </span>
 
             <span>
               <p>Province:</p>
-              <select>
-                <option value="province1">Select Province</option>
-                <option value="province1">Punjab</option>
-                <option value="province2">KPK</option>
-                <option value="province3">Balochistan</option>
-                <option value="province3">Sindh</option>
-                <option value="province3">GigitBaltitan</option>
+              <select
+                value={province}
+                onChange={(e) => setProvince(e.target.value)}
+              >
+                <option value="">Select Province</option>
+                <option value="Punjab">Punjab</option>
+                <option value="KPK">KPK</option>
+                <option value="Balochistan">Balochistan</option>
+                <option value="Sindh">Sindh</option>
+                <option value="GilgitBaltistan">GilgitBaltistan</option>
+                {/* Add more province options */}
               </select>
             </span>
 
             <span>
               <p>Case Type:</p>
-              <select>
-                <option value="province1">Select </option>
-                <option value="province1">Family</option>
-                <option value="province2">Property</option>
-                <option value="province3">Aministrative</option>
-                <option value="province3">Real Estate</option>
-                <option value="province3">Criminal</option>
-                <option value="province3">Civil</option>
+              <select
+                value={caseType}
+                onChange={(e) => setCaseType(e.target.value)}
+              >
+                <option value="">Select Type</option>
+                <option value="Family">Family</option>
+                <option value="Property">Property</option>
+                <option value="Administrative">Administrative</option>
+                <option value="Real Estate">Real Estate</option>
+                <option value="Criminal">Criminal</option>
+                <option value="Civil">Civil</option>
+                {/* Add more case type options */}
               </select>
             </span>
-            </div>
+          </div>
         </div>
         <div className="right-job-post">
-            <span className='job-des'>
-                <p>Case Description</p>
-                <textarea name="" id="" cols="58" rows="10"></textarea>
+          <span className="job-des">
+            <p>Case Description</p>
+            <textarea
+              name=""
+              id=""
+              cols="58"
+              rows="10"
+              value={caseDescription}
+              onChange={(e) => setCaseDescription(e.target.value)}
+            ></textarea>
+          </span>
+          <div className="job-budget">
+            <span className="Budget">
+              <p>Enter Budget:</p>
+              <span>
+                <input
+                  type="number"
+                  value={budget}
+                  onChange={(e) => setBudget(e.target.value)}
+                />
+              </span>
             </span>
-            <div className='job-budget'>
-                <span className='Budget'>
-                <p>Enter Budget:</p>
-                <span>
-                <input type="number" />
-                </span>
-                
-                </span>
-                
-                <span><button className='post-btn'>Post</button>
-</span>
-            </div>
+            <span>
+              <button className="post-btn" onClick={handlePostJob}>
+                Post
+              </button>
+            </span>
+          </div>
         </div>
+      </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default JobPostModel
+export default JobPostModel;
