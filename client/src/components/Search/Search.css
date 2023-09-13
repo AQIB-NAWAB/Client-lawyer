@@ -189,6 +189,42 @@
 .search-head span{
     display: none;
 }
+.lawyer-profile-model{
+    margin: 20px 40px;
+    height: 30rem;
+    width: 50rem;
+    border: 1px solid black;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.354);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.lawyer-profile-model-head{
+    padding: 10px 40px;
+    display: flex;
+}
+.lawyerModel-works-container{
+    display: flex;
+    margin-top: 15px;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media screen and (max-width:786px){
     .left-search option {
         font-size: 8px;
