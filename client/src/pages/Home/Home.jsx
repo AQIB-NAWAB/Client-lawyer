@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 const Home = () => {
   return (
-    <>
+    <section id='main'>
     <Navbar/>
 
     <div className="hero">
@@ -291,7 +291,7 @@ Forms and Articles</h1>
     <button>Post a Job & Get Free Proposals</button>
 </div>
 
-    </>
+    </section>
   );
 }
 

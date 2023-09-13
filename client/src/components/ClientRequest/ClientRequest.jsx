@@ -37,18 +37,18 @@ const ClientRequest = () => {
                 <h3>Budget</h3>
             </div>
             <section className='scroll'>
-            <section className='request-content-section' >
-            <div className="request-content"  onClick={()=>setShowModel(true)}>
+            <section className='request-content-section' onClick={()=>setShowModel(true)} >
+            <div className="request-content"  >
                 <p>8/20/2023 </p>
                 <p>QAMAR </p>
                 <p>Family Law </p>
                 <p>10 </p>
                 <p>30,000 PKR </p>
             </div>
-            {showModel && <ClientDetailModel setShowModel={setShowModel} />}
             </section>
+            {showModel && <ClientDetailModel setShowModel={setShowModel} />}
 
-            <section className='request-content-section'>
+            <section className='request-content-section' onClick={()=>setShowModel(true)}>
             <div className="request-content">
                 <p>8/20/2023</p>
                 <p>QAMAR</p>
@@ -59,7 +59,7 @@ const ClientRequest = () => {
             </section>
 
 
-            <section className='request-content-section'>
+            <section className='request-content-section' onClick={()=>setShowModel(true)}>
             <div className="request-content" >
                 <p>8/20/2023</p>
                 <p>QAMAR</p>
