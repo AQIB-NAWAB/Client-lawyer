@@ -13,16 +13,50 @@ const Notification = require('../models/notificationModel')
 // register a user
 
 exports.registerUser = catchAsyncError(async (req, res, next) => {
-  // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-  //   folder: "avatars",
-  //   width: 150,
-  //   crop: "scale",
-  // });
-
-  // const { name, email, password } = req.body;
-
+  // Create the user first
   const user = await User.create(req.body);
 
+  // Upload profile picture to Cloudinary
+  if (user.role === 'client' && req.body.profile_picture_image) {
+    const profileImage = await cloudinary.v2.uploader.upload(req.body.profile_picture_image, {
+      folder: 'avatars',
+      width: 150,
+      crop: 'scale',
+    });
+    user.profile_picture_image = {
+      public_id: profileImage.public_id,
+      url: profileImage.url,
+    };
+  } else if (user.role === 'lawyer' && req.body.profile_picture_image && req.body.lawyer_cnic_image && req.body.lawyer_license_image) {
+    const profileImage = await cloudinary.v2.uploader.upload(req.body.profile_picture_image, {
+      folder: 'avatars',
+      width: 150,
+      crop: 'scale',
+    });
+    const cnicImage = await cloudinary.v2.uploader.upload(req.body.lawyer_cnic_image, {
+      folder: 'cnic',
+    });
+    const licenseImage = await cloudinary.v2.uploader.upload(req.body.lawyer_license_image, {
+      folder: 'licenses',
+    });
+    user.profile_picture_image = {
+      public_id: profileImage.public_id,
+      url: profileImage.url,
+    };
+    user.lawyer_cnic_image = {
+      public_id: cnicImage.public_id,
+      url: cnicImage.url,
+    };
+    user.lawyer_license_image = {
+      public_id: licenseImage.public_id,
+      url: licenseImage.url,
+    };
+  }
+
+  // Save the user with uploaded picture(s)
+  await user.save();
+
+  // Send the token
   sendToken(user, 201, res);
 });
 
@@ -223,25 +257,45 @@ exports.getSingleUser = catchAsyncError (async (req,res,next)=>{
 
 
 
-// UPDATE profile (--ADMIN)
+// UPDATE profile
 
-exports.updateProfile = catchAsyncError(async (req,res,next) => {
+exports.updateProfile = catchAsyncError(async (req, res, next) => {
+  // Create an object to store the updated user data
+  const updatedUserData = { ...req.body };
 
+  // Check if the user is updating profile picture
+  if (req.body.profile_picture_image) {
+    // Upload the new profile picture to Cloudinary
+    const profileImage = await cloudinary.v2.uploader.upload(req.body.profile_picture_image, {
+      folder: 'avatars',
+      width: 150,
+      crop: 'scale',
+    });
 
+    // Update the profile picture data in the user object
+    updatedUserData.profile_picture_image = {
+      public_id: profileImage.public_id,
+      url: profileImage.url,
+    };
+  }
 
+  // Update the user's profile with the new data
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    updatedUserData,
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
 
-  const user = await User.findByIdAndUpdate(req.user.id, req.body, {
-    new:true,
-    runValidators:true,
-    useFindAmdModify:false,
-  })
-
-  
   res.status(200).json({
     success: true,
-    user,
+    user: updatedUser,
   });
 });
+
 
 
 
