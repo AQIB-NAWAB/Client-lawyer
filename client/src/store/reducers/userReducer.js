@@ -93,7 +93,7 @@ export const registerLawyer = createAsyncThunk(
 // update password
 
 export const updateProfile = createAsyncThunk(
-  'password/update',
+  'password/Profile',
   async (data, { rejectWithValue }) => {
     try {
       const config = {
