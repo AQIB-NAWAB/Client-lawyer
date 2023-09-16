@@ -80,11 +80,9 @@ const updateHandler=async(mode)=>{
         </>:<>
         {city}
         </>}</li>
-        <li>Email: {detailsEditMode?<>
-          <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)} /> 
-        </>:<>
+        <li>Email: 
         {email}
-        </>}</li>
+</li>
         <li>Phone: {detailsEditMode?<>
           <input type="text" value={phone} onChange={(e)=>setPhone(e.target.value)} /> 
         </>:<>

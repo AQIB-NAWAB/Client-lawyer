@@ -41,6 +41,20 @@
 
 
 }
+.services-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 50px;
+}
+.services-container .services{
+    background-color: #e0ded6ff;
+    padding: 10px 20px;
+    font-weight:  500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    align-items: center;
+    background-color:  #e0ded6ff;
+    border-radius: 10px;
+}
 @media screen and (max-width:786px) {
     .lawyer-detail{
         max-height: 450px; /* Set the desired maximum height for the scrollable area */
@@ -49,6 +63,10 @@
     .detail-btn ul{
         gap: 15px;
         border-right: none;
+    }
+    .services-container{
+        flex-direction: column;
+        gap: 30px;
     }
 }
 @media screen and (max-width:414px) {
@@ -65,3 +83,60 @@
     }
 }
    
+
+
+/* Modal Styling */
+.modal_overlay{
+    background-color: gray;
+    width: 100%;
+    height: 100%;
+}
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+    max-width: 400px;
+  }
+  
+  .modal h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+  
+  .modal label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .modal input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .modal button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .modal button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Add more styling as needed for individual modals */
+  
