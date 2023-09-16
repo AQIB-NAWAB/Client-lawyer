@@ -162,16 +162,17 @@
 .post-btn{
     background-color: #02431bff;
     color: white;
-    width: 80px;
+    width: 70px;
     height: 30px;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 
 @media screen and (max-width:414px) {
     .job-btn button{
-        font-size: 10px;
+        font-size: 13px;
         padding: 6px 6px;
+        border-radius: 8px;
     }
     .job-inputs{
         display: flex;

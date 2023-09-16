@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import {BsPerson} from "react-icons/bs"
 import {LiaEnvelopeOpenTextSolid} from "react-icons/lia"
@@ -5,6 +6,12 @@ import {PiUsersThreeFill} from "react-icons/pi"
 import { Link, useNavigate } from 'react-router-dom'
 import LawyerNavbar from '../../components/LawyerNavbar/LawyerNavbar'
 import "./Clients.css"
+
+import ViewProfileModel from './ViewProfileModel'
+
+const Clients = () => {
+    const[viewProfileModel,setViewProfileModel]=useState(false)
+
 import { getAllAcceptedOffer, getAllSentOffer } from '../../store/reducers/lawyerReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -89,7 +96,11 @@ const Clients = () => {
                     </span>
                     <span className='offer-box-footer'>
                         <span><p className='offer-box-f'>Rate:</p><p>{single_offer.rate}Rs.</p></span>
-                        <button>View Profile</button>
+                      
+                        <button onClick={()=>setViewProfileModel(true)} >View Profile</button>
+                        {viewProfileModel && <ViewProfileModel setViewProfileModel={setViewProfileModel}/> }
+
+
                     </span>
                 </div>
 

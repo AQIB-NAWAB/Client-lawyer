@@ -192,10 +192,11 @@
 .lawyer-profile-model{
     margin: 20px 40px;
     height: 30rem;
-    width: 50rem;
+    width: 50rem; 
     border: 1px solid black;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.354);
     border-radius: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
 }
 .lawyer-profile-model-head{
@@ -208,21 +209,80 @@
     flex-direction: column;
     gap: 15px;
 }
+.model-details{
+    border-right: 1px solid rgba(0, 0, 0, 0.315);
+    width: 30rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.model-details ul{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    flex-direction: column;
+    gap: 10px;
+}
+.model-details ul li{
+    flex-direction: column;
+    list-style-type: none;
+}
+.model-past-work h1{
+    font-size: 20px;
+    padding-top: 10px;
+}
+.model-past-work p{
+    gap: 0px;
+    padding: 0px;
+}
+.model-works-container{
+    display: flex;
+    margin-top: 15px;
+    flex-direction: column;
+    gap: 15px;
+}
+.model-works-container .work{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+    padding: 10px 10px;
+    font-weight:  500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color:  #e0ded6ff;
+    border-radius: 10px;
+}
+.lawyer-detail{
+    max-height: 30rem;
+    overflow-y: auto;
+}
+.lawyer-profile-model .head{
+    display: flex;
+    justify-content: space-between;
+}
+.model-close{
+    font-size: 25px;
+    right: 0;
+    color: rgb(2, 90, 36);
+    cursor: pointer;
+}
+.send-request-btn{
+    margin-top: 10px;
+    background-color: #02431bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 120px;
+    height: 40px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.post-btn{
+    cursor: pointer;
+}
 
 
 @media screen and (max-width:786px){
@@ -318,5 +378,22 @@
     width: fit-content;
     gap: 10px;
 }
-    
+.lawyer-profile-model{
+    height: 28rem;
+    width: 60rem; 
+
+} 
+.model-past-work h1{
+    padding-left: 12px;
+}
+.model-works-container {
+    padding-left: 10px;
+}
+.lawyer-detail{
+    max-height: 20rem;
+    overflow-y: auto;
+}
+.job-wrap{
+    width: 25rem;
+}
 }
