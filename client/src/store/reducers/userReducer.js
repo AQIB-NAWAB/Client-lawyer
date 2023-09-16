@@ -92,10 +92,9 @@ export const registerLawyer = createAsyncThunk(
 );
 // update password
 
-export const updatePassword = createAsyncThunk(
+export const updateProfile = createAsyncThunk(
   'password/update',
-  async ({oldPassword,newPassword,confirmPassword}, { rejectWithValue }) => {
-    console.log(oldPassword,newPassword)
+  async (data, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
@@ -103,7 +102,7 @@ export const updatePassword = createAsyncThunk(
         },
         withCredentials: true,
       };
-      const response = await axios.put('http://localhost:3000/api/v1/password/update',{oldPassword,newPassword,confirmPassword},config);
+      const response = await axios.put('http://localhost:8080/api/v1/me/update',data,config);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -242,17 +241,17 @@ builder.addCase(registerClient.rejected,(state,action)=>{
 })
 
 // udpate password
-builder.addCase(updatePassword.pending, (state) => {
+builder.addCase(updateProfile.pending, (state) => {
   state.loading= true
   state.error= ""
 });
-builder.addCase(updatePassword.fulfilled,(state,action)=>{
+builder.addCase(updateProfile.fulfilled,(state,action)=>{
     state.loading=false
     state.isAuthenticated= true
     state.user= action.payload
     state.error= ""
 })
-builder.addCase(updatePassword.rejected,(state,action)=>{
+builder.addCase(updateProfile.rejected,(state,action)=>{
     state.loading=false
     state.error= action.payload
 })

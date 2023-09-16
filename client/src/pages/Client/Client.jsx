@@ -7,7 +7,8 @@ import {PiPencilLight} from "react-icons/pi"
 import "./Client.css"
 import { Link } from 'react-router-dom'
 import ClientNavbar from '../../components/ClientNavbar/ClientNavbar'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateProfile } from '../../store/reducers/userReducer'
 
 const Client = () => {
   const [headEditMode,setHeadEditMode]=useState(false)
@@ -27,7 +28,22 @@ useEffect(()=>{
   setClientName(user?.user?.name)
   setEmail(user?.user?.email)
   setCity(user?.user?.city)
+  setPhone(user?.user?.phone)
+  setOffice(user?.user?.office)
+  setDescription(user?.user?.description)
 },[])
+
+const dispatch =useDispatch()
+const updateHandler=async(mode)=>{
+  if(mode=="headEditMode"){
+    setHeadEditMode(false)
+  }else if (mode == "descriptionEditMode"){
+    setDescriptionEditMode(false)
+  }else if(mode=="detailsEditMode"){
+    setDetailsEditMode(false)
+  }
+  dispatch(updateProfile({name:clientName,city:city.toLowerCase(),description,email,phone,office,}))
+}
 
     return (
     <>
@@ -49,7 +65,7 @@ useEffect(()=>{
         </span>}
         {headEditMode?<>
         <input type="text" value={clientName} onChange={(e)=>setClientName(e.target.value)} /> 
-        <AiOutlineCheck className='pencil' onClick={()=>setHeadEditMode(false)}/>
+        <AiOutlineCheck className='pencil' onClick={()=>updateHandler("headEditMode")} />
         </>:<>
         {clientName}<PiPencilLight className='pencil' onClick={()=>setHeadEditMode(true)}/>
         </>}</h1>
@@ -57,7 +73,7 @@ useEffect(()=>{
       <hr />
       <section className='dash-container'>
       <div className="detail-btn">
-      {detailsEditMode ?<AiOutlineCheck className='pencil' onClick={()=>setDetailsEditMode(false)}/> :<PiPencilLight className='pencil ' onClick={()=>setDetailsEditMode(true)}/>}
+      {detailsEditMode ?<AiOutlineCheck className='pencil' onClick={()=>updateHandler("detailsEditMode")}/> :<PiPencilLight className='pencil ' onClick={()=>setDetailsEditMode(true)}/>}
       <ul>
         <li>City: {detailsEditMode?<>
           <input type="text" value={city} onChange={(e)=>setCity(e.target.value)} /> 
@@ -77,7 +93,7 @@ useEffect(()=>{
       </ul>
     </div>
     <div className="description">
-      <span className='header'><h1>DESCRIPTION:</h1>{descriptionEditMode?<AiOutlineCheck className='pencil' onClick={()=>setDescriptionEditMode(false)}/> :<PiPencilLight className='pencil' onClick={()=>setDescriptionEditMode(true)}/>}</span>
+      <span className='header'><h1>DESCRIPTION:</h1>{descriptionEditMode?<AiOutlineCheck className='pencil' onClick={()=>updateHandler("descriptionEditMode")}/> :<PiPencilLight className='pencil' onClick={()=>setDescriptionEditMode(true)}/>}</span>
       {descriptionEditMode ?<>
         <textarea cols="80" rows={10}  value={description} onChange={(e)=>setDescription(e.target.value)}>
 

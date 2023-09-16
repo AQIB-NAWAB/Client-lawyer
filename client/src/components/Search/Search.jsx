@@ -16,38 +16,34 @@ const Search = () => {
 
   const [showFilters, setShowFilters] = useState(false);
   const [showProfileModel, setShowProfileModel] = useState(false);
-  const [searchText, setSearchText] = useState('l');
-  const [practiceArea, setPracticeArea] = useState('crime');
-  const [province, setProvince] = useState('punjab');
-  const [city, setCity] = useState('chunian');
-  const [budget, setBudget] = useState(1000);
+  const [searchText, setSearchText] = useState('');
+  const [practiceArea, setPracticeArea] = useState('');
+  const [province, setProvince] = useState('');
+  const [city, setCity] = useState('');
+  const [budget, setBudget] = useState(0);
 
   useEffect(() => {
     // Clear errors when component mounts
     dispatch(clearErrors());
   }, [dispatch]);
 
+  useEffect(() => {
+    // Call handleSearch whenever filter values change
+    handleSearch();
+  }, [searchText, practiceArea, province, city, budget]);
 
   const handleSearch = () => {
-
-  
     // Dispatch the action here
-   
-  };
-  
-
-useEffect(()=>{
-  dispatch(
-    searchLawyers({
-      name: searchText,
-      practice_area: practiceArea,
-      province: province,
-      city: city,
-      budget: budget,
-    })
-  );
-},[])
-
+    dispatch(
+      searchLawyers({
+        name: searchText,
+        practice_area: practiceArea,
+        province: province,
+        city: city,
+        budget: budget*100,
+      })
+    );
+  }
   return (
     <>
       <ClientNavbar />
@@ -115,9 +111,9 @@ useEffect(()=>{
                   onChange={(e) => setPracticeArea(e.target.value)}
                 >
                   <option value="">Select</option>
-                  <option value="Family Law">Family Law</option>
-                  <option value="Criminal Law">Criminal Law</option>
-                  <option value="Housing Law">Housing Law</option>
+                  <option value="family">Family Law</option>
+                  <option value="crime">Criminal Law</option>
+                  <option value="housing">Housing Law</option>
                 </select>
               </span>
 
@@ -128,11 +124,11 @@ useEffect(()=>{
                   onChange={(e) => setProvince(e.target.value)}
                 >
                   <option value="">Select</option>
-                  <option value="Punjab">Punjab</option>
-                  <option value="KPK">KPK</option>
-                  <option value="Balochistan">Balochistan</option>
-                  <option value="Sindh">Sindh</option>
-                  <option value="GilgitBaltistan">GilgitBaltistan</option>
+                  <option value="punjab">Punjab</option>
+                  <option value="kkp">KPK</option>
+                  <option value="balochistan">Balochistan</option>
+                  <option value="sindh">Sindh</option>
+                  <option value="gilgitBaltistan">GilgitBaltistan</option>
                 </select>
               </span>
 
@@ -140,11 +136,13 @@ useEffect(()=>{
                 <p className="p-tag">City</p>
                 <select value={city} onChange={(e) => setCity(e.target.value)}>
                   <option value="">Select</option>
-                  <option value="Lahore">Lahore</option>
-                  <option value="Karachi">Karachi</option>
-                  <option value="Islamabad">Islamabad</option>
-                  <option value="Peshawar">Peshawar</option>
-                  <option value="Multan">Multan</option>
+                  <option value="lahore">Lahore</option>
+                  <option value="karachi">Karachi</option>
+                  <option value="islamabad">Islamabad</option>
+                  <option value="peshawar">Peshawar</option>
+                  <option value="multan">Multan</option>
+                  <option value="chunian">Chunian</option>
+
                 </select>
               </span>
 
@@ -155,6 +153,7 @@ useEffect(()=>{
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
                 />
+                <span>{budget*100}</span>
               </span>
 
               <div className="close-btn">

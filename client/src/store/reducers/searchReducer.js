@@ -11,7 +11,7 @@ const initialState = {
 
 export const searchLawyers = createAsyncThunk(
     'search /lawyers',
-    async ({name="",practice_area="",province="",city="",budget=0}, { rejectWithValue }) => {
+    async ({name,practice_area,province,city,budget}, { rejectWithValue }) => {
       try {
         const config = {
           headers: {
@@ -20,6 +20,7 @@ export const searchLawyers = createAsyncThunk(
           withCredentials: true,
         };
         const response = await axios.get(`http://localhost:8080/api/v1/search/lawyers?city=${city}&budget=${budget}&name=${name}&practice_area=${practice_area}&province=${province}`,
+        {},
         config);
         return response.data;
       } catch (error) {
