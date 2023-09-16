@@ -91,7 +91,7 @@ const ClientSignUp = () => {
               <span>
                 <p>Email:</p>
                 <input
-                  type="text"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
