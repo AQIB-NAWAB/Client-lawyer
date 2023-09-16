@@ -94,7 +94,7 @@ const SendLawyerRequestModel = ({setSendLawyerRequestModel}) => {
           </span>
           <div className="job-budget">
             <span className="Budget">
-              <p>Enter Budget:</p>
+              <p>Budget:</p>
               <span>
                 <input
                   type="number"

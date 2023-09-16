@@ -14,10 +14,7 @@ const LawyerProfileModel = ({setShowProfileModel}) => {
     <div className="lawyer-profile-model">
     <div className="head">
       <h1><span className='person'><BsPerson /></span>*Lawyer Name</h1>
-      <span>
-         <button className='send-request-btn' onClick={()=>setSendLawyerRequestModel(true)}>Send Request</button>
-         {sendLawyerRequestModel && <SendLawyerRequestModel setSendLawyerRequestModel={setSendLawyerRequestModel}/>}
-         </span>
+   
          <AiFillCloseCircle className='model-close' onClick={()=>closeModel()}/>
     </div>
     <hr />
@@ -28,6 +25,10 @@ const LawyerProfileModel = ({setShowProfileModel}) => {
       <li>City: lahore</li>
       <li>Phone: 0202020202</li>
       <li>Office: <span>kkksasad dsa d asdas</span></li>
+      <span>
+         <button className='send-request-btn' onClick={()=>setSendLawyerRequestModel(true)}>Send Request</button>
+         {sendLawyerRequestModel && <SendLawyerRequestModel setSendLawyerRequestModel={setSendLawyerRequestModel}/>}
+         </span>
     </ul>
   </div>
   <section className='lawyer-detail'>
