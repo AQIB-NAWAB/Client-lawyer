@@ -14,13 +14,15 @@ const Notification = require('../models/notificationModel')
 
 exports.registerUser = catchAsyncError(async (req, res, next) => {
   // Create the user first
+  const {role}=req.body
+  console.log({body:req.body})
   const user = await User.create(req.body);
 
   // Upload profile picture to Cloudinary
   if (user.role === 'client' && req.body.profile_picture_image) {
     const profileImage = await cloudinary.v2.uploader.upload(req.body.profile_picture_image, {
       folder: 'avatars',
-      width: 150,
+      width: 2048,
       crop: 'scale',
     });
     user.profile_picture_image = {
@@ -268,7 +270,7 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
     // Upload the new profile picture to Cloudinary
     const profileImage = await cloudinary.v2.uploader.upload(req.body.profile_picture_image, {
       folder: 'avatars',
-      width: 150,
+      width: 2048,
       crop: 'scale',
     });
 
@@ -461,31 +463,41 @@ exports.sendRequest = catchAsyncError(async (req, res, next) => {
 });
 
 // Get all requests of a lawyer
+// Get all requests of a lawyer
 exports.getAllRequests = catchAsyncError(async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id).populate('client_requests');
-    if (!user) {
+    // Find the lawyer by user ID
+    const lawyer = await User.findById(req.user._id);
+
+    if (!lawyer) {
       return res.status(404).json({
         success: false,
-        message: 'User not found.',
+        message: 'Lawyer not found.',
       });
     }
 
-    // Extract relevant details for each request
-    const requestsWithClientDetails = user.client_requests.map((request) => {
-      return {
-        _id: request._id,
-        case_type: request.case_type,
-        budget: request.budget,
-        case_description: request.case_description,
-        client: {
-          name: user.name,
-          city: user.city,
-          province: user.province,
-          clientId:user._id
-        },
-      };
-    });
+    // Extract client request details with client information
+    const requestsWithClientDetails = [];
+
+    for (const clientRequestId of lawyer.client_requests) {
+      const clientRequest = await Request.findById(clientRequestId).populate('client_id', 'name city province _id ');
+
+      if (clientRequest) {
+        requestsWithClientDetails.push({
+          _id: clientRequest._id,
+          case_type: clientRequest.case_type,
+          budget: clientRequest.budget,
+          status:clientRequest.status,
+          case_description: clientRequest.case_description,
+          client: {
+            name: clientRequest.client_id.name,
+            city: clientRequest.client_id.city,
+            province: clientRequest.client_id.province,
+            clientId: clientRequest.client_id._id,
+          },
+        });
+      }
+    }
 
     res.status(200).json({
       success: true,
@@ -544,7 +556,7 @@ exports.sendCustomRequest = catchAsyncError(async (req, res, next) => {
       city: city,
       province: province,
       practice_area: case_type,
-      status: 'approve', // Corrected 'approve' to 'approved'
+      status: 'approve', 
     });
 
     // Create a single custom request
@@ -558,12 +570,11 @@ exports.sendCustomRequest = catchAsyncError(async (req, res, next) => {
     // Send the custom request to all matching lawyers
     for (const lawyer of lawyers) {
       customRequest.lawyer_id = lawyer._id;
-      await Request.create(customRequest);
-
+     const request= await Request.create(customRequest);
       // Add the request to the lawyer's requests array
       await User.findByIdAndUpdate(
         lawyer._id,
-        { $push: { client_requests: customRequest._id } },
+        { $push: { client_requests: request._id } },
         { new: true, useFindAndModify: false }
       );
     }
@@ -617,32 +628,20 @@ exports.acceptOffer = catchAsyncError(async (req, res, next) => {
     clientRequest.status = 'closed';
     await clientRequest.save();
 
-    // Remove the client request from other lawyers
-    await Request.deleteMany({
-      _id: { $ne: clientRequest._id },
-      client_id: clientRequest.client_id,
-    });
-
-    // Update the client and lawyer's relationships
+    // Send the notification
     const clientUser = await User.findById(clientRequest.client_id);
     const lawyerUser = await User.findById(offer.lawyer_id);
 
-    clientUser.my_lawyers.push({ lawyer_id: lawyerUser._id });
-    lawyerUser.my_clients.push({ client_id: clientUser._id });
-
-    await clientUser.save();
-    await lawyerUser.save();
-
     const notificationText = `Your offer for ${clientRequest.case_type} has been accepted by ${clientUser.name}.`;
-    
+
     await Notification.create({
       user_id: lawyerUser._id,
       text: notificationText,
     });
+    
     res.status(200).json({
       success: true,
-      message:
-        'Offer accepted successfully, and request closed and removed from other lawyers.',
+      message: 'Offer accepted successfully, and notification sent.',
     });
   } catch (error) {
     console.error(error);
@@ -652,13 +651,14 @@ exports.acceptOffer = catchAsyncError(async (req, res, next) => {
     });
   }
 });
+ 
 
 // Get all sent offers of lawyers
 
 exports.getAllSentLawyerOffers = async (req, res, next) => {
   try {
     // Find the lawyer offers
-    const lawyerOffers = await Offer.find({ lawyer_id: req.user._id,accepted:false }).exec();
+    const lawyerOffers = await Offer.find({ lawyer_id: req.user._id, }).exec();
 
     // Create an array to store the lawyer offers with client information
     const lawyerOffersWithClientInfo = [];
@@ -821,7 +821,7 @@ exports.getAllSentRequestsByClient = async (req, res, next) => {
 // Get and display all return offers from lawyers for any client request
 exports.getAllReturnOffers = catchAsyncError(async (req, res, next) => {
   try {
-    const returnOffers = await Offer.find({ accepted: true }).populate([
+    const returnOffers = await Offer.find({  }).populate([
       {
         path: 'client_request_id',
         populate: { path: 'client_id', select: 'name city province' }, // Populate client information

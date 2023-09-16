@@ -1,38 +1,44 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { clearErrors, upadteStatus } from '../../store/reducers/adminReducer'
+import { toast } from 'react-toastify'
 
-const LawyerApproveModel = ({setShowApproveModel}) => {
+const LawyerApproveModel = ({lawyer,setShowApproveModel}) => {
     const cancel=()=>{
         setShowApproveModel(false)
     }
     const [status,setStatus]=useState("")
+    const dispatch=useDispatch()
    const handelUpdate=()=>{
-    alert(status)
+    dispatch(upadteStatus({id:lawyer._id,status}))
+    window.location.reload()
    }
+
+
   return (
     <div className="request-wrap">
     <div className='request-detail-container'>
         <div className="request-left-detail">
             <p>Lawyer Profile</p>
-            <p>Name : Qamar</p>
-            <p>Hourly Rate : 20$</p>
-            <p>Practice Area : Family law</p>
+            <p>Name : {lawyer?.name}</p>
+            <p>Hourly Rate : {(lawyer?.hourly_rate)?lawyer?.hourly_rate:0} pkr</p>
+            <p>Practice Area : {lawyer?.practice_area}</p>
             <p>Description :</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non suscipit excepturi error autem perferendis, hic, voluptatem quam quidem magni velit possimus, doloremque nihil similique provident. Tenetur quis soluta sequi alias?</p>
+            <p>{lawyer?.description}</p>
         </div>
         <div className="request-right-detail-p">
-            <p>License image :</p>
-            <p>Profile image :</p>
-            <p>Cnic :</p>
+            <p>License image : <a href={lawyer?.lawyer_license_image.url} target='_blank'>open</a></p>
+            <p>Profile image : <a href={lawyer?.profile_picture_image.url} target='_blank'>open</a></p>
+            <p>Cnic : <a href={lawyer?.lawyer_cnic_image.url} target='_blank'>open</a></p>
 
         <div className="update-dropdown">
             
         <span>
               <p>Update Status:</p>
               <select value={status} onChange={(e)=>setStatus(e.target.value)}>
-                <option value="city1">Select</option>
-                <option value="Approve">Approve</option>
-                <option value="Pending">Pending</option>
-                <option value="Reject">Reject</option>
+                <option value="">Select</option>
+                <option value="approve">Approve</option>
+                <option value="pending">Pending</option>
               </select>
         </span>
             

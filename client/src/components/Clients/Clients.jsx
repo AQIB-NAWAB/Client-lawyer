@@ -1,15 +1,31 @@
-import React, { useState } from 'react'
+
+import React, { useEffect, useState } from 'react'
 import {BsPerson} from "react-icons/bs"
 import {LiaEnvelopeOpenTextSolid} from "react-icons/lia"
 import {PiUsersThreeFill} from "react-icons/pi"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import LawyerNavbar from '../../components/LawyerNavbar/LawyerNavbar'
 import "./Clients.css"
+
 import ViewProfileModel from './ViewProfileModel'
 
 const Clients = () => {
     const[viewProfileModel,setViewProfileModel]=useState(false)
-  
+
+import { getAllAcceptedOffer, getAllSentOffer } from '../../store/reducers/lawyerReducer'
+import { useDispatch, useSelector } from 'react-redux'
+
+const Clients = () => {
+    const { sentOffers,acceptedoffers,error,loading } = useSelector((state) => state.Lawyer);
+  const [offers,setOffers]=useState([])
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
+    useEffect(() => {
+        dispatch(getAllSentOffer());
+        dispatch(getAllAcceptedOffer())
+      }, [dispatch]);
+
+
   return (
     <>
     <LawyerNavbar/>
@@ -34,38 +50,28 @@ const Clients = () => {
             <div className="left-myjobs">
                 <h1>Sent Offers</h1>
                 <section className='offer-box-container-ab'>
-                <div className="offer-box">
+                
+
+
+                {
+                    sentOffers?.lawyerOffers?.map((single_offer)=>(
+                        <div className="offer-box" key={single_offer._id}>
                     <span className='offer-box-headings'>
-                        <p>"Client name"</p>
-                        <p>Faimly Law</p>
-                        <p>Karachi</p>
-                        <p>Sindh</p>
+                        <p>{single_offer.client_info.name}</p>
+                        <p>{single_offer?.case_type}</p>
+                        <p>{single_offer?.client_info.province}</p>
+                        <p>{single_offer?.client_info.city}</p>
                     </span>
                     <span className='offer-description-span'>
                         <p className='offer-box-p'>Offer Description:</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, officia! Eaque vel delectus tenetur maiores voluptates numquam illo doloremque fugit expedita, iure modi quibusdam magnam explicabo quidem. Vero, sit odio?</p>
+                        <p>{single_offer.description}</p>
                     </span>
                     <span className='offer-box-footer'>
-                        <span><p className='offer-box-f'>Rate:</p><p>30,000Rs.</p></span>
+                        <span><p className='offer-box-f'>Rate:</p><p>{single_offer.rate}Rs.</p></span>
                     </span>
                 </div>
-
-
-                <div className="offer-box">
-                    <span className='offer-box-headings'>
-                        <p>"Client name"</p>
-                        <p>Faimly Law</p>
-                        <p>Karachi</p>
-                        <p>Sindh</p>
-                    </span>
-                    <span className='offer-description-span'>
-                        <p className='offer-box-p'>Offer Description:</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, officia! Eaque vel delectus tenetur maiores voluptates numquam illo doloremque fugit expedita, iure modi quibusdam magnam explicabo quidem. Vero, sit odio?</p>
-                    </span>
-                    <span className='offer-box-footer'>
-                        <span><p className='offer-box-f'>Rate:</p><p>30,000Rs.</p></span>
-                    </span>
-                </div>
+                    ))
+                }
 
 
 
@@ -75,43 +81,35 @@ const Clients = () => {
             <div className="right-myjobs">
                 <h1>Accepted Offers</h1>
                 <section className='offer-box-container'>
-                <div className="offer-box">
+            {
+                acceptedoffers?.lawyerOffers?.map(single_offer=>(
+                    <div className="offer-box" key={single_offer._id}>
                     <span className='offer-box-headings'>
-                        <p>"Client name"</p>
-                        <p>Faimly Law</p>
-                        <p>Karachi</p>
-                        <p>Sindh</p>
+                        <p>{single_offer.client_info.name}</p>
+                        <p>{single_offer.case_type}</p>
+                        <p>{single_offer.client_info.city}</p>
+                        <p>{single_offer.client_info.province}</p>
                     </span>
                     <span className='offer-description-span'>
                         <p className='offer-box-p'>Offer Description:</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, officia! Eaque vel delectus tenetur maiores voluptates numquam illo doloremque fugit expedita, iure modi quibusdam magnam explicabo quidem. Vero, sit odio?</p>
+                        <p>{single_offer.description}</p>
                     </span>
                     <span className='offer-box-footer'>
-                        <span><p className='offer-box-f'>Rate:</p><p>30,000Rs.</p></span>
+                        <span><p className='offer-box-f'>Rate:</p><p>{single_offer.rate}Rs.</p></span>
+                      
                         <button onClick={()=>setViewProfileModel(true)} >View Profile</button>
                         {viewProfileModel && <ViewProfileModel setViewProfileModel={setViewProfileModel}/> }
+
+
                     </span>
                 </div>
 
 
-                <div className="offer-box">
-                    <span className='offer-box-headings'>
-                        <p>"Client name"</p>
-                        <p>Faimly Law</p>
-                        <p>Karachi</p>
-                        <p>Sindh</p>
-                    </span>
-                    <span className='offer-description-span'>
-                        <p className='offer-box-p'>Offer Description:</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, officia! Eaque vel delectus tenetur maiores voluptates numquam illo doloremque fugit expedita, iure modi quibusdam magnam explicabo quidem. Vero, sit odio?</p>
-                    </span>
-                    <span className='offer-box-footer'>
-                        <span><p className='offer-box-f'>Rate:</p><p>30,000Rs.</p></span>
-                        <button>View Profile</button>
-                    </span>
-                </div>
+                ))
+            }
 
 
+                
 
 
                 </section>

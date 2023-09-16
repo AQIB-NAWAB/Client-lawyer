@@ -1,12 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {BsPerson} from "react-icons/bs"
 import {BiSearchAlt} from "react-icons/bi"
 import {MdOutlinePersonSearch} from "react-icons/md"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ClientNavbar from '../../components/ClientNavbar/ClientNavbar'
 import "./MyJobs.css"
+import { useDispatch, useSelector } from 'react-redux'
+import { clearErrors, getAllReturnOffers, getAllSentRequest } from '../../store/reducers/clientReducer'
+import { acceptOffer } from '../../store/reducers/clientReducer'
+import { toast } from 'react-toastify'
+
+
+
+
 
 const MyJobs = () => {
+  const { sentRequests,returnOffers,isAccepted,error,loading } = useSelector((state) => state.Client);
+
+
+    const [request,setRequest]=useState([])
+    const [offers,setoffers]=useState([])
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
+    useEffect(() => {
+        dispatch(getAllSentRequest());
+        dispatch(getAllReturnOffers());
+      }, [dispatch,navigate,isAccepted]);
+    useEffect(()=>{
+setRequest(sentRequests?.sentRequests)
+setoffers(returnOffers?.returnOffers)
+
+    },[dispatch,navigate,isAccepted])
+
+    const handleConsult=(id)=>{
+        dispatch(acceptOffer({id}))
+    }
+    useEffect(() => {
+        if (isAccepted) {
+            toast.success("Congratulations For Further... ")
+        }
+        if(error){
+            toast.error(error)
+        }
+        dispatch(clearErrors())
+      }, [error,dispatch ,isAccepted]);
   return (
     <>
     <ClientNavbar/>
@@ -31,45 +68,25 @@ const MyJobs = () => {
             <div className="left-myjobs">
                 <h1>Send Requests</h1>
                 <section className='case-box-container'>
-                <div className="case-box">
+                { loading?<p>Loading...</p>:
+                sentRequests.sentRequests?.map((single_request)=>(
+                    <div className="case-box" key={single_request._id}>
                     <span>
-                        <p className='case-heading'>Case description :</p>
-                        <p className='case-des'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident aliquam quod labore natus autem saepe, ipsum adipisci libero expedita sapiente blanditiis ut magnam officia repellendus earum minus cumque ratione quidem.</p>
+                        <p className='case-heading'>{single_request.case_description}</p>
                     </span>
                     <span className='more-details'>
-                        <span><p className='bold-head'>City: </p><p>Karachi</p></span>
-                        <span><p className='bold-head'>Province: </p><p>Sindh</p></span>
-                        <span><p className='bold-head'>Budget: </p><p>30,000Rs.</p></span>
+                        <span><p className='bold-head'>City: </p><p>{single_request?.lawyer_info?.city}</p></span>
+                        <span><p className='bold-head'>Province: </p><p>{single_request?.lawyer_info?.province}</p></span>
+                        <span><p className='bold-head'>Budget: </p><p>{single_request.budget}Rs.</p></span>
                     </span>
                 </div>
-
-
-                <div className="case-box">
-                    <span>
-                        <p className='case-heading'>Case description :</p>
-                        <p className='case-des'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident aliquam quod labore natus autem saepe, ipsum adipisci libero expedita sapiente blanditiis ut magnam officia repellendus earum minus cumque ratione quidem.</p>
-                    </span>
-                    <span className='more-details'>
-                        <span><p className='bold-head'>City: </p><p>Karachi</p></span>
-                        <span><p className='bold-head'>Province: </p><p>Sindh</p></span>
-                        <span><p className='bold-head'>Budget: </p><p>30,000Rs.</p></span>
-                    </span>
-                </div>
+                ))
+                }
 
 
 
-                <div className="case-box">
-                    <span>
-                        <p className='case-heading'>Case description :</p>
-                        <p className='case-des'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident aliquam quod labore natus autem saepe, ipsum adipisci libero expedita sapiente blanditiis ut magnam officia repellendus earum minus cumque ratione quidem.</p>
-                    </span>
-                    <span className='more-details'>
-                        <span><p className='bold-head'>City: </p><p>Karachi</p></span>
-                        <span><p className='bold-head'>Province: </p><p>Sindh</p></span>
-                        <span><p className='bold-head'>Budget: </p><p>30,000Rs.</p></span>
-                    </span>
-                </div>
 
+               
 
 
                 </section>
@@ -77,42 +94,37 @@ const MyJobs = () => {
             <div className="right-myjobs">
                 <h1>Return Offers</h1>
                 <section className='offer-box-container'>
-                <div className="offer-box">
+                {
+                    loading?<p>Loading...</p>:returnOffers?.returnOffers?.map((single_offer)=>(
+                        <div className="offer-box" key={single_offer._id}>
                     <span className='offer-box-headings'>
-                        <p>"Lawyer name"</p>
-                        <p>Faimly Law</p>
-                        <p>Karachi</p>
-                        <p>Sindh</p>
+                        <p>{single_offer?.lawyer_id?.name}</p>
+                        <p>{single_offer?.lawyer_id?.practice_area}</p>
+                        <p>{single_offer?.lawyer_id?.city}</p>
+                        <p>{single_offer?.lawyer_id?.province}</p>
                     </span>
                     <span className='offer-description-span'>
                         <p className='offer-box-p'>Offer Description:</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, officia! Eaque vel delectus tenetur maiores voluptates numquam illo doloremque fugit expedita, iure modi quibusdam magnam explicabo quidem. Vero, sit odio?</p>
+                        <p>{single_offer.description}</p>
                     </span>
                     <span className='offer-box-footer'>
-                        <span><p className='offer-box-f'>Rate:</p><p>30,000Rs.</p></span>
-                        <button>Consult</button>
+                        <span><p className='offer-box-f'>Rate:</p><p>{single_offer.rate}Rs.</p></span>
+                        {
+                            single_offer?.accepted==true?
+                            <button style={{cursor:"not-allowed",backgroundColor:"gray",color:"white"}} >Accepted</button>:
+
+                        <button onClick={()=>handleConsult(single_offer._id)}>Consult</button>
+                        }
+                        
                     </span>
                 </div>
+                    ))
+                }
 
 
 
 
-                <div className="offer-box">
-                    <span className='offer-box-headings'>
-                        <p>"Lawyer name"</p>
-                        <p>Faimly Law</p>
-                        <p>Karachi</p>
-                        <p>Sindh</p>
-                    </span>
-                    <span className='offer-description-span'>
-                        <p className='offer-box-p'>Offer Description:</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, officia! Eaque vel delectus tenetur maiores voluptates numquam illo doloremque fugit expedita, iure modi quibusdam magnam explicabo quidem. Vero, sit odio?</p>
-                    </span>
-                    <span className='offer-box-footer'>
-                        <span><p className='offer-box-f'>Rate:</p><p>30,000Rs.</p></span>
-                        <button>Consult</button>
-                    </span>
-                </div>
+               
 
 
 
@@ -131,5 +143,6 @@ const MyJobs = () => {
   </>
   )
 }
+
 
 export default MyJobs;

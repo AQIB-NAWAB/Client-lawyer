@@ -70,6 +70,7 @@
 .bold{
     font-weight: bold;
 }
+
 @media screen and (max-width:786px) {
     .right-request h1{
         font-size: 25px;
@@ -185,10 +186,18 @@
     cursor: pointer;
     border-radius: 20px;
     font-weight: 600;
+    background-color: ;
   }
+
   .cancel-btn:hover{
     background-color: rgba(217, 217, 217, 0.306);
     transition: 0.2s ease;
+  }
+  .cancel-btn-lawyer-model{
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(71, 71, 71, 0.521);
+    cursor: pointer;
   }
   @keyframes fadeInUp {
     from {

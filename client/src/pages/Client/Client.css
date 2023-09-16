@@ -95,8 +95,10 @@
     position: relative;
     border-right: 1px solid black;
     width: fit-content;
-    height: 93vh;
-    min-width: 200px;
+
+    height: 73vh;
+    min-width: 270px;
+
 }
 .detail-btn ul {
     display: flex;
@@ -117,6 +119,7 @@
     display: flex;
     gap: 10px;
 }
+
 .description{
     padding: 20px;
     display: flex;
@@ -135,7 +138,15 @@
 .description p{
     font-size: 15px;
     font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
+    line-height: 26px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+.profile_image{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50px;
 }
 .save-changes-c-name{
     background-color: #5EAC24;
@@ -239,6 +250,7 @@
     .person{
         padding: 5px;
         font-size: 30px;
+        background-color: gray;
     }
     .head .pencil{
         font-size: 20px;

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { postjob } from '../../store/reducers/clientReducer';
 
 const JobPostModel = ({ setPostJob }) => {
   const [city, setCity] = useState(''); // State for city selection
@@ -10,7 +12,7 @@ const JobPostModel = ({ setPostJob }) => {
   const cancelbtn = () => {
     setPostJob(false);
   };
-
+const dispatch=useDispatch()
   const handlePostJob = () => {
     // You can access the state values here and perform any necessary actions, such as posting the job.
     console.log('City:', city);
@@ -19,9 +21,9 @@ const JobPostModel = ({ setPostJob }) => {
     console.log('Case Description:', caseDescription);
     console.log('Budget:', budget);
 
-    // Perform any actions here...
+    dispatch(postjob({city,province,description:caseDescription,budget,case_type:caseType}))
 
-    // Close the job post modal
+    
     setPostJob(false);
   };
 
@@ -38,9 +40,11 @@ const JobPostModel = ({ setPostJob }) => {
                 onChange={(e) => setCity(e.target.value)}
               >
                 <option value="">Select city</option>
-                <option value="Lahore">Lahore</option>
-                <option value="Karachi">Karachi</option>
-                <option value="Islamabad">Islamabad</option>
+                <option value="lahore">Lahore</option>
+                <option value="chunian">Chunian</option>
+
+                <option value="karachi">Karachi</option>
+                <option value="islamabad">Islamabad</option>
                 {/* Add more city options */}
               </select>
             </span>
@@ -52,12 +56,11 @@ const JobPostModel = ({ setPostJob }) => {
                 onChange={(e) => setProvince(e.target.value)}
               >
                 <option value="">Select Province</option>
-                <option value="Punjab">Punjab</option>
-                <option value="KPK">KPK</option>
-                <option value="Balochistan">Balochistan</option>
-                <option value="Sindh">Sindh</option>
-                <option value="GilgitBaltistan">GilgitBaltistan</option>
-                {/* Add more province options */}
+                <option value="punjab">Punjab</option>
+                <option value="kpk">KPK</option>
+                <option value="balochistan">Balochistan</option>
+                <option value="sindh">Sindh</option>
+                <option value="gilgitBaltistan">GilgitBaltistan</option>
               </select>
             </span>
 
@@ -68,12 +71,12 @@ const JobPostModel = ({ setPostJob }) => {
                 onChange={(e) => setCaseType(e.target.value)}
               >
                 <option value="">Select Type</option>
-                <option value="Family">Family</option>
-                <option value="Property">Property</option>
-                <option value="Administrative">Administrative</option>
-                <option value="Real Estate">Real Estate</option>
-                <option value="Criminal">Criminal</option>
-                <option value="Civil">Civil</option>
+                <option value="family">Family</option>
+                <option value="property">Property</option>
+                <option value="administrative">Administrative</option>
+                <option value="real Estate">Real Estate</option>
+                <option value="crime">Crime</option>
+                <option value="civil">Civil</option>
                 {/* Add more case type options */}
               </select>
             </span>

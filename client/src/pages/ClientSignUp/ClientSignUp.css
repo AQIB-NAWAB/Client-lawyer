@@ -25,3 +25,8 @@
     color:rgb(255, 255, 255);
     transition: 0.2s;
 }
+.image-preview{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}

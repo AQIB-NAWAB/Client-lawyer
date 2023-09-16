@@ -1,23 +1,59 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './LawyerLogin.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginNavbar from '../../components/LoginSignUpNavbar/LoginNavbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearErrors, loginUser } from '../../store/reducers/userReducer';
+import { ToastContainer, toast } from 'react-toastify';
 
 const LawyerLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Function to handle form submission
-  const handleLogin = () => {
-    // You can access the state values here and perform the login logic
-    console.log('Email:', email);
-    console.log('Password:', password);
 
-    // Perform login logic here...
-  };
+
+  const { user, error, isAuthenticated } = useSelector((state) => state.User);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+    useEffect(() => {
+      if (isAuthenticated && user?.user.role=="client") {
+
+        navigate("/client");
+      }else if(isAuthenticated && user?.user.role=="lawyer"){
+        navigate("/lawyer");
+
+      }else if(isAuthenticated && user?.user.role=="admin"){
+        navigate("/admin");
+      
+      }
+    }, [isAuthenticated, navigate]);
+
+    useEffect(() => {
+      if (error) {
+        toast.error(error);
+      }
+      dispatch(clearErrors())
+    }, [error,dispatch ]);
+
+
+
+    const handleLogin = () => {
+      // You can access the state values here and perform the login logic
+      console.log('Email:', email);
+      console.log('Password:', password);
+  
+  
+      dispatch(loginUser({email,password}))
+      console.log(error,isAuthenticated)
+  
+   
+  
+    }
 
   return (
     <>
+     <ToastContainer />
       <LoginNavbar />
       <div className="login-container">
         <div className="login-page">
@@ -34,7 +70,7 @@ const LawyerLogin = () => {
             <span>
               <p>Email:</p>
               <input
-                type="text"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />

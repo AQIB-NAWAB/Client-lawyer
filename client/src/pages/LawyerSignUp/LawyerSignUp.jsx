@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// LawyerSignUp.js
+
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './LawyerSignUp.css';
 import LoginNavbar from '../../components/LoginSignUpNavbar/LoginNavbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearErrors, registerLawyer } from '../../store/reducers/userReducer';
+import { ToastContainer, toast } from 'react-toastify';
 
 const LawyerSignUp = () => {
   const [fullName, setFullName] = useState('');
@@ -12,30 +17,71 @@ const LawyerSignUp = () => {
   const [lawyerLicense, setLawyerLicense] = useState(null);
   const [picture, setPicture] = useState(null);
   const [cnic, setCnic] = useState(null);
+  const [area,setArea]=useState("")
 
-  // Function to handle file input changes
+  const dispatch = useDispatch();
+  const navigate=useNavigate()
+
   const handleFileChange = (e, setStateFunction) => {
     const file = e.target.files[0];
-    setStateFunction(file);
+
+    if (file) {
+      if (file.size > 1024 * 1024) {
+        toast.error('Image size must be less than 1MB.');
+      } else {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setStateFunction(reader.result);
+          }
+        };
+
+        reader.readAsDataURL(file);
+      }
+    }
   };
 
-  // Function to handle form submission
   const handleSignUp = () => {
-    // You can access the state values here and perform the signup logic
-    console.log('Full Name:', fullName);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('City:', city);
-    console.log('Province:', province);
-    console.log('Lawyer License:', lawyerLicense);
-    console.log('Picture:', picture);
-    console.log('CNIC:', cnic);
+    const registrationData = {
+      role: 'lawyer',
+      email,
+      name: fullName,
+      password,
+      lawyer_license_image: lawyerLicense,
+      profile_picture_image: picture,
+      city,
+      province,
+      lawyer_cnic_image: cnic,
+      practice_area:area
+    };
 
-    // Perform signup logic here...
+    dispatch(registerLawyer(registrationData));
   };
+
+  const { user, error, isAuthenticated } = useSelector  ((state) => state.User);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors())
+    }
+    if (isAuthenticated && user?.user.role=="client") {
+
+      navigate("/client");
+    }else if(isAuthenticated && user?.user.role=="lawyer"){
+      navigate("/lawyer");
+
+    }else if(isAuthenticated && user?.user.role=="admin"){
+      navigate("/admin");
+    
+    }
+
+  }, [error,dispatch,isAuthenticated,navigate ]);
+  
 
   return (
     <>
+      <ToastContainer />
       <LoginNavbar />
       <div className="login-container">
         <div className="signup-page">
@@ -62,7 +108,7 @@ const LawyerSignUp = () => {
               <span>
                 <p>Email:</p>
                 <input
-                  type="text"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -82,10 +128,13 @@ const LawyerSignUp = () => {
                 <button className="choose-file-button">Choose File</button>
                 <input
                   type="file"
-                  accept="image/*" // Specify the accepted file type(s)
+                  accept="image/*"
                   onChange={(e) => handleFileChange(e, setLawyerLicense)}
                 />
               </span>
+              {lawyerLicense && (
+                <img src={lawyerLicense} alt="Preview" className="image-preview" />
+              )}
             </div>
 
             <div className="right-inputs">
@@ -96,9 +145,11 @@ const LawyerSignUp = () => {
                   onChange={(e) => setCity(e.target.value)}
                 >
                   <option value="">Select city</option>
-                  <option value="Lahore">Lahore</option>
-                  <option value="Karachi">Karachi</option>
-                  <option value="Islamabad">Islamabad</option>
+                  <option value="lahore">Lahore</option>
+                  <option value="karachi">Karachi</option>
+                  <option value="islamabad">Islamabad</option>
+                  <option value="chunian">chunian</option>
+
                   {/* Add more city options */}
                 </select>
               </span>
@@ -110,11 +161,25 @@ const LawyerSignUp = () => {
                   onChange={(e) => setProvince(e.target.value)}
                 >
                   <option value="">Select Province</option>
-                  <option value="Punjab">Punjab</option>
-                  <option value="KPK">KPK</option>
-                  <option value="Balochistan">Balochistan</option>
-                  <option value="Sindh">Sindh</option>
-                  <option value="GilgitBaltistan">GilgitBaltistan</option>
+                  <option value="punjab">Punjab</option>
+                  <option value="kpk">KPK</option>
+                  <option value="balochistan">Balochistan</option>
+                  <option value="sindh">Sindh</option>
+                  <option value="gilgitBaltistan">GilgitBaltistan</option>
+                  {/* Add more province options */}
+                </select>
+              </span>
+              <span>
+                <p>Practice Area:</p>
+                <select
+                  value={area}
+                  onChange={(e) => setArea(e.target.value)}
+                >
+                  <option value="">Select Area</option>
+                  <option value="crime">Crime</option>
+                  <option value="defenec">Defence</option>
+                  <option value="law">Law</option>
+                  <option value="marriage">Marriage</option>
                   {/* Add more province options */}
                 </select>
               </span>
@@ -124,20 +189,26 @@ const LawyerSignUp = () => {
                 <button className="choose-file-button">Choose File</button>
                 <input
                   type="file"
-                  accept="image/*" // Specify the accepted file type(s)
+                  accept="image/*"
                   onChange={(e) => handleFileChange(e, setPicture)}
                 />
               </span>
+              {picture && (
+                <img src={picture} alt="Preview" className="image-preview" />
+              )}
 
               <p>Upload CNIC:</p>
               <span className="custom-file-input">
                 <button className="choose-file-button">Choose File</button>
                 <input
                   type="file"
-                  accept="image/*" // Specify the accepted file type(s)
+                  accept="image/*"
                   onChange={(e) => handleFileChange(e, setCnic)}
                 />
               </span>
+              {cnic && (
+                <img src={cnic} alt="Preview" className="image-preview" />
+              )}
             </div>
           </div>
           <button className="login-L" onClick={handleSignUp}>

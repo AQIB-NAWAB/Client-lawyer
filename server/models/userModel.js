@@ -70,7 +70,8 @@ const userSchema = new mongoose.Schema({
   },
   // Lawyer Further Details
   hourly_rate:{
-    type:Number
+    type:Number,
+    default:0
   },
   phone:{
     type:String
