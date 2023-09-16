@@ -36,8 +36,8 @@
 }
 .lawyer-detail{
     max-height: 580px; /* Set the desired maximum height for the scrollable area */
-    overflow: scroll;
-    padding-bottom: 100px;    /* Enable scrolling when content overflows */
+    overflow-y: scroll;
+    padding-bottom: 0px;    /* Enable scrolling when content overflows */
 
 
 }

@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {BsPerson} from "react-icons/bs"
 import {LiaEnvelopeOpenTextSolid} from "react-icons/lia"
 import {PiUsersThreeFill} from "react-icons/pi"
 import { Link } from 'react-router-dom'
 import LawyerNavbar from '../../components/LawyerNavbar/LawyerNavbar'
 import "./Clients.css"
+import ViewProfileModel from './ViewProfileModel'
 
 const Clients = () => {
+    const[viewProfileModel,setViewProfileModel]=useState(false)
   
   return (
     <>
@@ -86,7 +88,8 @@ const Clients = () => {
                     </span>
                     <span className='offer-box-footer'>
                         <span><p className='offer-box-f'>Rate:</p><p>30,000Rs.</p></span>
-                        <button>View Profile</button>
+                        <button onClick={()=>setViewProfileModel(true)} >View Profile</button>
+                        {viewProfileModel && <ViewProfileModel setViewProfileModel={setViewProfileModel}/> }
                     </span>
                 </div>
 
