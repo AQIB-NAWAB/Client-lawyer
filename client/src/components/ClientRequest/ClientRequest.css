@@ -1,7 +1,7 @@
 .right-request{
     height: 40rem;
     width: 60rem;
-    border: 1px solid black;
+    border: 1px solid rgba(43, 40, 40, 0.507);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.372);
