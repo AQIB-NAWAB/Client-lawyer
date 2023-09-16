@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// ClientSignUp.js
+
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './ClientSignUp.css';
 import LoginNavbar from '../../components/LoginSignUpNavbar/LoginNavbar';
+import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch
+import { clearErrors, registerClient } from '../../store/reducers/userReducer'; // Import your Redux action
+import { ToastContainer, toast } from 'react-toastify';
 
 const ClientSignUp = () => {
   const [fullName, setFullName] = useState('');
@@ -11,27 +16,55 @@ const ClientSignUp = () => {
   const [province, setProvince] = useState('');
   const [picture, setPicture] = useState(null);
 
-  // Function to handle file input changes
+  const dispatch = useDispatch();
+  const navigate=useNavigate()
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setPicture(file);
+    
+    if (file) {
+      if (file.size > 1024 * 1024) {
+        toast.error('Image size must be less than 1MB.');
+      } else {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setPicture(reader.result);
+          }
+        };
+
+        reader.readAsDataURL(file);
+      }
+    }
   };
 
-  // Function to handle form submission
   const handleSignUp = () => {
-    // You can access the state values here and perform the signup logic
-    console.log('Full Name:', fullName);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('City:', city);
-    console.log('Province:', province);
-    console.log('Picture:', picture);
+    const registrationData = {
+      email,
+      name: fullName,
+      password,
+      profile_picture_image: picture,
+      city,
+      province,
+      role: 'client',
+    };
 
-    // Perform signup logic here...
+    dispatch(registerClient(registrationData));
   };
-
+  const { user, error, isAuthenticated } = useSelector((state) => state.User);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors())
+    }
+    if(isAuthenticated){
+      navigate("/client")
+    }
+  }, [error,dispatch ]);
   return (
     <>
+    <ToastContainer/>
       <LoginNavbar />
       <div className="login-container">
         <div className="signup-page">
@@ -82,9 +115,11 @@ const ClientSignUp = () => {
                   onChange={(e) => setCity(e.target.value)}
                 >
                   <option value="">Select city</option>
-                  <option value="Lahore">Lahore</option>
-                  <option value="Karachi">Karachi</option>
-                  <option value="Islamabad">Islamabad</option>
+                  <option value="lahore">Lahore</option>
+                  <option value="karachi">Karachi</option>
+                  <option value="islamabad">Islamabad</option>
+                  <option value="chunian">Chunian</option>
+
                   {/* Add more city options */}
                 </select>
               </span>
@@ -107,13 +142,16 @@ const ClientSignUp = () => {
 
               <p>Upload Picture:</p>
               <span className="custom-file-input">
-                <button className="choose-file-button">Choose File</button>
+                <button className="choose-file-button" >Choose File</button>
                 <input
                   type="file"
                   accept="image/*" // Specify the accepted file type(s)
                   onChange={handleFileChange}
                 />
               </span>
+              {picture && (
+              <img src={picture} alt="Preview" className="image-preview" />
+            )}
             </div>
           </div>
           <button className="login-L" onClick={handleSignUp}>

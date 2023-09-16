@@ -1,51 +1,33 @@
-import React, { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import LoginNavbar from '../../components/LoginSignUpNavbar/LoginNavbar';
 import './AdminPage.css';
 import LawyerApproveModel from './LawyerApproveModel';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllApprovedLawyers, getAllLawyers, getAllPendingLawyers } from '../../store/reducers/adminReducer';
 
 const AdminPage = () => {
   const [selectedButton, setSelectedButton] = useState('All');
   const [showApproveModel, setShowApproveModel] = useState(false);
 
-  // Separate arrays for different lawyer statuses
-  const allLawyers = [
-    {
-      name: 'Ahmad Ali',
-      email: 'ahmad@gmail.com',
-      status: 'Pending',
-    },
-    {
-      name: 'John Doe',
-      email: 'john@gmail.com',
-      status: 'Rejected',
-    },
-    // Add more lawyers as needed
-  ];
+  const [lawyers, setLawyers] = useState([]);
+  const [allPendingLawyers, setAllPendingLawyers] = useState([]);
+  const [allApprovedLawyers, setAllApprovedLawyers] = useState([]);
+  const [selectedLawyer, setSelectedLawyer] = useState(null);
 
-  const [pendingLawyers,aetPendinLawyers]=useState([
-    {
-      name: 'Ahmad Ali',
-      email: 'ahmad@gmail.com',
-      status: 'Pending',
-    },
-    {
-      name: 'John Doe',
-      email: 'john@gmail.com',
-      status: 'Pending',
-    },
-  ])
-  const [rejectedLawyers,setRejectedLawyers]=useState([
-    {
-      name: 'Ahmad Ali',
-      email: 'ahmad@gmail.com',
-      status: 'Rejected',
-    },
-    {
-      name: 'John Doe',
-      email: 'john@gmail.com',
-      status: 'Rejected',
-    },
-  ])
+  const dispatch = useDispatch();
+  const { allLawyers, pendingLawyers, approveLawyers,isUpdated } = useSelector((state) => state.Admin);
+  useEffect(() => {
+    dispatch(getAllLawyers());
+    dispatch(getAllPendingLawyers());
+    dispatch(getAllApprovedLawyers());
+  }, [dispatch,isUpdated]);
+
+  useEffect(() => {
+    setLawyers(allLawyers.lawyers || []);
+    setAllPendingLawyers(pendingLawyers.lawyers || []);
+    setAllApprovedLawyers(approveLawyers.lawyers || []);
+  }, [allLawyers, pendingLawyers, approveLawyers,]);
 
   const handleButtonClick = (buttonType) => {
     setSelectedButton(buttonType);
@@ -54,39 +36,40 @@ const AdminPage = () => {
   const selectedLawyers = (buttonType) => {
     switch (buttonType) {
       case 'All':
-        return allLawyers;
+        return lawyers;
       case 'Pending':
-        return pendingLawyers;
-      case 'Rejected':
-        return rejectedLawyers;
+        return allPendingLawyers;
+      case 'Approved':
+        return allApprovedLawyers;
       default:
         return [];
     }
   };
+
 
   return (
     <>
       <LoginNavbar />
       <div className="admin-container">
         <div className="admin-btns">
-          <button
-            className={selectedButton === 'All' ? 'selected-button' : ''}
-            onClick={() => handleButtonClick('All')}
-          >
-            All
-          </button>
-          <button
-            className={selectedButton === 'Pending' ? 'selected-button' : ''}
-            onClick={() => handleButtonClick('Pending')}
-          >
-            Pending
-          </button>
-          <button
-            className={selectedButton === 'Rejected' ? 'selected-button' : ''}
-            onClick={() => handleButtonClick('Rejected')}
-          >
-            Rejected
-          </button>
+        <button
+  className={selectedButton === 'All' ? 'selected-button' : ''}
+  onClick={() => handleButtonClick('All')}
+>
+  All
+</button>
+<button
+  className={selectedButton === 'Pending' ? 'selected-button' : ''}
+  onClick={() => handleButtonClick('Pending')}
+>
+  Approved
+</button>
+<button
+  className={selectedButton === 'Approved' ? 'selected-button' : ''}
+  onClick={() => handleButtonClick('Approved')}
+>
+  Pending
+</button>
         </div>
         <div className="admin-box">
           <div className="admin-headings">
@@ -96,18 +79,22 @@ const AdminPage = () => {
             <p>Profile</p>
           </div>
           <div className="admin-details-container">
-            {selectedLawyers(selectedButton).map((lawyer, index) => (
-              <div className="admin-details" key={index}>
-                <p>{lawyer.name}</p>
-                <p>{lawyer.email}</p>
-                <p>{lawyer.status}</p>
-                <button onClick={() => setShowApproveModel(true)}>Profile</button>
-                {showApproveModel && (
-                  <LawyerApproveModel setShowApproveModel={setShowApproveModel} />
-                )}
-              </div>
-            ))}
-          </div>
+  {selectedLawyers(selectedButton)?.map((lawyer, index) => (
+    <div className="admin-details" key={index}>
+      <p>{lawyer.name}</p>
+      <p>{lawyer.email}</p>
+      <p>{lawyer.status}</p>
+      <button onClick={() => {
+        setSelectedLawyer(lawyer); // Set the selected lawyer when the "Profile" button is clicked
+        setShowApproveModel(true);
+      }}>Profile</button>
+    </div>
+  ))}
+</div>
+
+{showApproveModel && (
+  <LawyerApproveModel lawyer={selectedLawyer} setShowApproveModel={setShowApproveModel} />
+)}
         </div>
       </div>
     </>

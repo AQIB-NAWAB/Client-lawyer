@@ -3,11 +3,24 @@ import {HiOutlineBell} from "react-icons/hi2"
 import {BsPersonCircle} from "react-icons/bs"
 import "./ClientNavbar.css"
 import JobPostModel from './JobPostModel'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { logoutUser } from '../../store/reducers/userReducer'
+import { ToastContainer, toast } from 'react-toastify'
 
 const ClientNavbar = () => {
   const[postJob,setPostJob]=useState(false)
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
+  const handleLogout=()=>{
+    dispatch(logoutUser())
+toast.success("logout Successfully")
+    navigate("/")
+
+  }
   return (
-    <nav>  
+    <nav>
+    <ToastContainer/>  
     <div className="navContainer">
 
 <div className="logo">
@@ -21,7 +34,7 @@ const ClientNavbar = () => {
 <div className="nav_links">
     <ul>
         <li><HiOutlineBell fontSize="40px"/></li>
-        <li><BsPersonCircle className='navbar-person'/></li>
+        <li><BsPersonCircle className='navbar-person' onClick={()=>handleLogout()}/></li>
     </ul>
 </div>
     </div> 

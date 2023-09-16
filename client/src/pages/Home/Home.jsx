@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./Home.css";
 import {BsBuildingsFill,BsRocketTakeoffFill,BsHouseFill} from "react-icons/bs" 
 import {MdStoreMallDirectory} from "react-icons/md"
 import {FaStar, FaUserAlt} from "react-icons/fa"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
+import { useDispatch, useSelector } from 'react-redux';
 const Home = () => {
+  const {isAuthenticated,user,error}=useSelector(state=>state.User)
+
+    const dispatch=useDispatch()
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (isAuthenticated) {
+          // Redirect to the user's profile based on their role
+          navigate(`/${user?.user?.role}`);
+        }
+      }, [isAuthenticated, user, navigate]);
+
   return (
     <section id='main'>
     <Navbar/>

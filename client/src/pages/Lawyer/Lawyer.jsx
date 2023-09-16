@@ -7,8 +7,10 @@ import {PiPencilLight} from "react-icons/pi"
 import { Link } from 'react-router-dom'
 import "./Lawyer.css"
 import LawyerNavbar from '../../components/LawyerNavbar/LawyerNavbar'
+import { useSelector } from 'react-redux'
 
 const Lawyer = () => {
+const {user} =useSelector(state=>state.User)
   
   return (
     <>
@@ -26,7 +28,8 @@ const Lawyer = () => {
     </div>
     <div className="right-dashboard">
       <div className="head">
-        <h1><span className='person'><BsPerson /></span>*Lawyer Name*<PiPencilLight className='pencil'/></h1>
+        <h1>{user && user.user.profile_picture_image ?<img className='profile_image' src={user?.user?.profile_picture_image?.url} />:<span className='person'><BsPerson />
+        </span>}{user.user.name}<PiPencilLight className='pencil'/></h1>
       </div>
       <hr />
       <section className='dash-container'>

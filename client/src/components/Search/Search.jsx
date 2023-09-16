@@ -1,31 +1,59 @@
-import React, { useState } from "react";
-import "./Search.css";
-import { Link } from "react-router-dom";
-import { IoPersonCircle } from "react-icons/io5";
-import { BsPerson } from "react-icons/bs";
-import { BiSearchAlt } from "react-icons/bi";
-import { MdOutlinePersonSearch } from "react-icons/md";
-import { BsSearch } from "react-icons/bs";
-import { FaTimes } from "react-icons/fa";
-import { BsFilterRight } from "react-icons/bs";
-import ClientNavbar from "../ClientNavbar/ClientNavbar";
-import LawyerProfileModel from "./LawyerProfileModel";
-
+import React, { useState, useEffect } from 'react';
+import './Search.css';
+import { Link } from 'react-router-dom';
+import { BsFilterRight } from 'react-icons/bs';
+import { FaTimes } from 'react-icons/fa';
+import ClientNavbar from '../ClientNavbar/ClientNavbar';
+import LawyerProfileModel from './LawyerProfileModel';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchLawyers, clearErrors } from '../../store/reducers/searchReducer';
+import { BsPerson,BsSearch  } from 'react-icons/bs';
+import {BiSearchAlt} from "react-icons/bi"
+import {MdOutlinePersonSearch} from "react-icons/md"
 const Search = () => {
+  const dispatch = useDispatch();
+  const { lawyers, loading, error } = useSelector((state) => state.Search);
+
   const [showFilters, setShowFilters] = useState(false);
   const [showProfileModel, setShowProfileModel] = useState(false);
-  const [searchText, setSearchText] = useState(""); // State for search input
-  const [practiceArea, setPracticeArea] = useState(""); // State for practice area selection
-  const [province, setProvince] = useState(""); // State for province selection
-  const [city, setCity] = useState(""); // State for city selection
-  const [budget, setBudget] = useState(""); // State for budget range
+  const [searchText, setSearchText] = useState('l');
+  const [practiceArea, setPracticeArea] = useState('crime');
+  const [province, setProvince] = useState('punjab');
+  const [city, setCity] = useState('chunian');
+  const [budget, setBudget] = useState(1000);
+
+  useEffect(() => {
+    // Clear errors when component mounts
+    dispatch(clearErrors());
+  }, [dispatch]);
+
+
+  const handleSearch = () => {
+
+  
+    // Dispatch the action here
+   
+  };
+  
+
+useEffect(()=>{
+  dispatch(
+    searchLawyers({
+      name: searchText,
+      practice_area: practiceArea,
+      province: province,
+      city: city,
+      budget: budget,
+    })
+  );
+},[])
 
   return (
     <>
       <ClientNavbar />
       <div className="client-dash">
         <div className="left-dashboard">
-          <h3>Dashboard</h3>
+          <h3 onClick={()=>handleSearch()}>Dashboard</h3>
           <div className="client-link">
             <ul>
               <li>
@@ -63,7 +91,7 @@ const Search = () => {
           <section className="search-section">
             <div
               className={`left-search ${
-                showFilters ? "showFiltersSection" : "hideFiltersSection"
+                showFilters ? 'showFiltersSection' : 'hideFiltersSection'
               }`}
             >
               <h3>Filter By</h3>
@@ -110,10 +138,7 @@ const Search = () => {
 
               <span>
                 <p className="p-tag">City</p>
-                <select
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                >
+                <select value={city} onChange={(e) => setCity(e.target.value)}>
                   <option value="">Select</option>
                   <option value="Lahore">Lahore</option>
                   <option value="Karachi">Karachi</option>
@@ -133,10 +158,7 @@ const Search = () => {
               </span>
 
               <div className="close-btn">
-                <FaTimes
-                  fontSize="22px"
-                  onClick={() => setShowFilters(false)}
-                />
+                <FaTimes fontSize="22px" onClick={() => setShowFilters(false)} />
               </div>
             </div>
 
@@ -150,20 +172,35 @@ const Search = () => {
                   </div>
 
                   <div className="search-scroll">
-                    <div className="search-lawyer-bar">
-                      <span>
-                        <IoPersonCircle />
-                        <p>Qamar</p>
-                        <p>Family Law</p>
-                        <p>Lahore</p>
-                      </span>
-                      <button
-                        className="btn-profile"
-                        onClick={() => setShowProfileModel(true)}
-                      >
-                        Profile
-                      </button>
-                    </div>
+                  {loading ? (
+  <p>Loading...</p>
+) : error ? (
+  <p>Error: {error}</p>
+) : (
+  <div>
+  {loading ? (
+                      <p>Loading...</p>
+                    ) : error ? (
+                      <p>Error: {error}</p>
+                    ) : (
+                      lawyers?.lawyers?.map((lawyer, index) => (
+                        <div className="search-lawyer-bar" key={index}>
+                          <span>
+                            <p>{lawyer.name}</p>
+                            <p>{lawyer.practice_area}</p>
+                            <p>{lawyer.city}</p>
+                          </span>
+                          <button
+                            className="btn-profile"
+                            onClick={() => setShowProfileModel(true)}
+                          >
+                            Profile
+                          </button>
+                        </div>
+                      ))
+                    )}
+  </div>
+)}
                   </div>
                 </div>
               </div>
