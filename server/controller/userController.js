@@ -823,19 +823,31 @@ exports.getAllSentRequestsByClient = async (req, res, next) => {
 
 
 // Get and display all return offers from lawyers for any client request
-exports.getAllReturnOffers = catchAsyncError(async (req, res, next) => {
+exports.getClientReturnOffers = catchAsyncError(async (req, res, next) => {
   try {
-    const returnOffers = await Offer.find({  }).populate([
+    // Get the client's ID from the authenticated user
+    const clientId = req.user._id; // Assuming you have the authenticated client's user ID in req.user
+
+    // Find all client requests made by the client
+    const clientRequests = await Request.find({ client_id: clientId });
+
+    // Extract the IDs of the client's requests
+    const clientRequestIds = clientRequests.map(request => request._id);
+
+    // Find return offers related to the client's requests made by lawyers
+    const clientReturnOffers = await Offer.find({
+      client_request_id: { $in: clientRequestIds },
+    }).populate([
       {
         path: 'client_request_id',
-        populate: { path: 'client_id', select: 'name city province' }, // Populate client information
+        populate: { path: 'client_id', select: 'name city province' },
       },
-      { path: 'lawyer_id', select: 'name city province practice_area' }, // Populate lawyer name
+      { path: 'lawyer_id', select: 'name city province practice_area' },
     ]);
 
     res.status(200).json({
       success: true,
-      returnOffers,
+      clientReturnOffers,
     });
   } catch (error) {
     console.error(error);

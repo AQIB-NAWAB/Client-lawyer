@@ -32,7 +32,7 @@ export const getAllSentRequest = createAsyncThunk("all/sent/Request", async ( da
   }
 });
 // login the user
-export const getAllReturnOffers = createAsyncThunk("all/Offers", async ( data,{rejectWithValue } ) => {
+export const getAllReturnOffers = createAsyncThunk("all/return/Offers", async ( data,{rejectWithValue } ) => {
     try {
       console.log(data);
       const config = {

@@ -31,6 +31,7 @@ const {
   deleteAllNotifications,
   deleteNotification,
   getAllNotifications,
+  getClientReturnOffers,
 } = require("../controller/userController");
 const { isAuthebticatedUser, authorizeRoles,checkApprovedStatus } = require("../middleware/auth");
 
@@ -97,7 +98,7 @@ router.route('/lawyers/accepted/offers').get(isAuthebticatedUser,checkApprovedSt
 
 // Get all sent requests by a client
 router.route('/client/sent-requests').get(isAuthebticatedUser, getAllSentRequestsByClient);
-router.route('/client/return-requests').get(isAuthebticatedUser, getAllReturnOffers);
+router.route('/client/return-requests').get(isAuthebticatedUser, getClientReturnOffers);
 
 
 

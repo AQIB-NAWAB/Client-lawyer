@@ -95,7 +95,7 @@ setoffers(returnOffers?.returnOffers)
                 <h1>Return Offers</h1>
                 <section className='offer-box-container'>
                 {
-                    loading?<p>Loading...</p>:returnOffers?.returnOffers?.map((single_offer)=>(
+                    loading?<p>Loading...</p>:returnOffers?.clientReturnOffers?.map((single_offer)=>(
                         <div className="offer-box" key={single_offer._id}>
                     <span className='offer-box-headings'>
                         <p>{single_offer?.lawyer_id?.name}</p>
