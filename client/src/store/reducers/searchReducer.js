@@ -1,6 +1,7 @@
 // lawyerSearchSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { url } from '../request';
 
 const initialState = {
   lawyers: [],
@@ -19,7 +20,7 @@ export const searchLawyers = createAsyncThunk(
           },
           withCredentials: true,
         };
-        const response = await axios.get(`http://localhost:8080/api/v1/search/lawyers?city=${city}&budget=${budget}&name=${name}&practice_area=${practice_area}&province=${province}`,
+        const response = await axios.get(`${url}/api/v1/search/lawyers?city=${city}&budget=${budget}&name=${name}&practice_area=${practice_area}&province=${province}`,
         {},
         config);
         return response.data;

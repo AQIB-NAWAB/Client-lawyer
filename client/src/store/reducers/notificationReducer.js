@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { url } from "../request";
 
 const initialState = {
   loading: false,
@@ -21,7 +22,7 @@ export const getAllNotifications = createAsyncThunk("all/Notifications", async (
     };
 
     const response = await axios.get(
-      'http://localhost:8080/api/v1/notifications',
+      `${url}/api/v1/notifications`,
       config
     );
     console.log(response.data);
@@ -42,7 +43,7 @@ export const deleteAllNotifications = createAsyncThunk("delete/all/Notifications
       };
   
       const response = await axios.delete(
-        'http://localhost:8080/api/v1/notifications',
+        `${url}/api/v1/notifications`,
         config
       );
       console.log(response.data);
@@ -90,7 +91,7 @@ const notificationReducer = createSlice({
         state.error= ""
   
       });
-      builder.addCase(deleteAllNotifications.fulfilled,(state,action)=>{
+      builder.addCase(deleteAllNotifications.fulfilled,(state)=>{
           state.loading=false
           state.notifications= []
           state.error= ""

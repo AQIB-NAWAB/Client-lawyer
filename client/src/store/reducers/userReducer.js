@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { url } from "../request";
 
 const initialState = {
   loading: false,
@@ -22,7 +23,7 @@ export const loginUser = createAsyncThunk("login/user", async ( data,{rejectWith
     };
 
     const response = await axios.post(
-      'http://localhost:8080/api/v1/login',
+      `${url}/api/v1/login`,
       {
         email: data.email,
         password: data.password,
@@ -50,7 +51,7 @@ export const registerClient = createAsyncThunk(
       };
 
       const response = await axios.post(
-        "http://localhost:8080/api/v1/register",
+        `${url}/api/v1/register`,
         {name,email,password,profile_picture_image,province,city},
         config
       );
@@ -78,7 +79,7 @@ export const registerLawyer = createAsyncThunk(
       };
 
       const response = await axios.post(
-        "http://localhost:8080/api/v1/register",
+        `${url}/api/v1/register`,
         {name,email,password,profile_picture_image,province,city,lawyer_cnic_image,lawyer_license_image,role,practice_area},
         config
       );
@@ -102,7 +103,7 @@ export const updateProfile = createAsyncThunk(
         },
         withCredentials: true,
       };
-      const response = await axios.put('http://localhost:8080/api/v1/me/update',data,config);
+      const response = await axios.put(`${url}/api/v1/me/update`,data,config);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -126,7 +127,7 @@ export const loadUser = createAsyncThunk(
         },
         withCredentials: true,
       };
-      const response = await axios.get('http://localhost:8080/api/v1/me',config);
+      const response = await axios.get(`${url}/api/v1/me`,config);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -146,7 +147,7 @@ try{
     withCredentials: true,
   };
   
-  axios.get("http://localhost:8080/api/v1/logout", config);
+  axios.get(`${url}/api/v1/logout`, config);
 }catch(error){
   console.log(error)
 }
@@ -193,7 +194,7 @@ const userReducer = createSlice({
       state.user= action.payload
       state.error= ""
   })
-  builder.addCase(loadUser.rejected,(state,action)=>{
+  builder.addCase(loadUser.rejected,(state)=>{
       state.loading=false
       state.isAuthenticated= false
       state.user=null
@@ -206,7 +207,7 @@ builder.addCase(logoutUser.pending,(state)=>{
   state.user= null
   state.error= ""
 })
-builder.addCase(logoutUser.fulfilled,(state,action)=>{
+builder.addCase(logoutUser.fulfilled,(state)=>{
   state.loading=false
   state.isAuthenticated= false
   state.user= null

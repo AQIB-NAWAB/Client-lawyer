@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { url } from "../request";
 
 const initialState = {
   loading: false,
@@ -24,7 +25,7 @@ export const getAllLawyers = createAsyncThunk("all/lawyers", async ( data,{rejec
     };
 
     const response = await axios.get(
-      'http://localhost:8080/api/v1/admin/lawyers',
+      `${url}/api/v1/admin/lawyers`,
       config
     );
     console.log(response.data);
@@ -45,7 +46,7 @@ export const getAllPendingLawyers = createAsyncThunk("all/pending/lawyers", asyn
       };
   
       const response = await axios.get(
-        'http://localhost:8080/api/v1/admin/lawyers/pending',
+        `${url}/api/v1/admin/lawyers/pending`,
         config
       );
       console.log(response.data);
@@ -69,7 +70,7 @@ export const getAllApprovedLawyers = createAsyncThunk("all/approved/lawyers", as
       };
   
       const response = await axios.get(
-        'http://localhost:8080/api/v1/admin/lawyers/approve',
+        `${url}/api/v1/admin/lawyers/approve`,
         config
       );
       console.log(response.data);
@@ -91,7 +92,7 @@ export const getAllApprovedLawyers = createAsyncThunk("all/approved/lawyers", as
       };
   
       const response = await axios.put(
-        'http://localhost:8080/api/v1/admin/lawyer/status',
+        `${url}/api/v1/admin/lawyer/status`,
         {
             id,
             status,
