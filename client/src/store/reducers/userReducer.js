@@ -223,7 +223,7 @@ builder.addCase(logoutUser.rejected,(state,action)=>{
 // register user
 builder.addCase(registerClient.pending, (state) => {
   state.loading= true
-  state.isAuthenticated= false
+  state.isAuthenticated= true
   state.user= null
   state.error= ""
 });
@@ -239,6 +239,9 @@ builder.addCase(registerClient.rejected,(state,action)=>{
     state.user=null
     state.error= action.payload
 })
+
+
+
 
 // udpate password
 builder.addCase(updateProfile.pending, (state) => {

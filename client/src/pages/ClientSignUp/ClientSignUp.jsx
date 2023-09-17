@@ -141,11 +141,11 @@ const ClientSignUp = () => {
                   onChange={(e) => setProvince(e.target.value)}
                 >
                   <option value="">Select Province</option>
-                  <option value="Punjab">Punjab</option>
-                  <option value="KPK">KPK</option>
-                  <option value="Balochistan">Balochistan</option>
-                  <option value="Sindh">Sindh</option>
-                  <option value="GilgitBaltistan">GilgitBaltistan</option>
+                  <option value="punjab">Punjab</option>
+                  <option value="kpk">KPK</option>
+                  <option value="balochistan">Balochistan</option>
+                  <option value="sindh">Sindh</option>
+                  <option value="gilgitBaltistan">GilgitBaltistan</option>
                   {/* Add more province options */}
                 </select>
               </span>

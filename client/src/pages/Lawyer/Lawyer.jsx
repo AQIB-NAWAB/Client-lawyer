@@ -59,7 +59,7 @@ const [certificatesEditMode,setCertificatesMode]=useState(false)
     }else if(mode=="detailsEditMode"){
       setDetailsEditMode(false)
     }
-    dispatch(updateProfile({name:clientName,city:city.toLowerCase(),description,email,phone,office,services}))
+    dispatch(updateProfile({name:clientName,city:city.toLowerCase(),description,email,phone,office,services,hourly_rate:hourlyRate}))
   }
   
 
@@ -263,7 +263,7 @@ const Certificates=()=>{
           <span className="work  " key={single._id}>
         <p>Case Date: {single.case_date}</p>
         <p>Case Type: {single.case_type}</p>
-        <p>Court: {single._court}</p>
+        <p>Court: {single.court}</p>
         </span>
         ))
        }

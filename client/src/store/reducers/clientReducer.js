@@ -11,7 +11,7 @@ const initialState = {
 
 
 // login the user
-export const getAllSentRequest = createAsyncThunk("all/Request", async ( data,{rejectWithValue } ) => {
+export const getAllSentRequest = createAsyncThunk("all/sent/Request", async ( data,{rejectWithValue } ) => {
   try {
     console.log(data);
     const config = {
@@ -106,7 +106,6 @@ export const getAllReturnOffers = createAsyncThunk("all/Offers", async ( data,{r
 
   export const sendRequest = createAsyncThunk("send/Request", async ( {case_description,case_type,budget,id},{rejectWithValue } ) => {
     try {
-      console.log({description,case_type,budget,id})
       const config = {
         headers: {
           'Content-Type': 'application/json',

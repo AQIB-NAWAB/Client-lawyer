@@ -58,7 +58,6 @@ const ClientRequest = () => {
                 <h3>Date</h3>
                 <h3>Name</h3>
                 <h3>Case Type</h3>
-                <h3>Offers</h3>
                 <h3>Budget</h3>
             </div>
             <section className='scroll'>
@@ -73,7 +72,6 @@ const ClientRequest = () => {
                 <p>{single_request?.createdAt}</p>
                 <p>{single_request?.client?.name}</p>
                 <p>{single_request.case_type}</p>
-                <p>10</p>   
                 <p>{single_request.budget} PKR</p>
             </div>
             </section>
