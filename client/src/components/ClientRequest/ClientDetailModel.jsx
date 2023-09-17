@@ -22,12 +22,12 @@ const dispatch=useDispatch()
     <AiOutlineClose fontSize={22} style={{cursor:"pointer",position:"absolute",top:"10px",right:"20px"}} onClick={()=>setShowModel(false)}/>
         <div className="request-left-detail">
             <p>Client Request</p>
-            <p>Job Status : {request.status}</p>
-            <p>Name : {request.client.name}</p>
-            <p>Budget : {request.budget}pkr</p>
-            <p>Case Type : {request.case_type}</p>
+            <p>Job Status : {request?.status}</p>
+            <p>Name : {request?.client.name}</p>
+            <p>Budget : {request?.budget}pkr</p>
+            <p>Case Type : {request?.case_type}</p>
             <p>Case Description :</p>
-            <p>{request.case_description}</p>
+            <p>{request?.case_description}</p>
 
         </div>
         <div className="request-right-detail">
@@ -36,7 +36,7 @@ const dispatch=useDispatch()
             <span className='describe-offer'><textarea name="" id="" cols="30" rows="5" value={description} onChangeCapture={(e)=>setDescription(e.target.value)}></textarea></span>
             <p>Hourly Rate : <input type="number" value={price} onChange={(e)=>setPrice(e.target.value)} className='rate-h'/></p>
             <span className='btn-send-offer'>
-            {request.status=="closed"?<p style={{fontSize:"18px",border:"none",color:"red",borderRadius:"3px" }}>Sorry this Job is  Closed</p>:<>
+            {request?.status=="closed"?<p style={{fontSize:"18px",border:"none",color:"red",borderRadius:"3px" }}>Sorry this Job is  Closed</p>:<>
             <button className='send-btn' onClick={()=>sendOfferToClient()}>Send</button>
                 <button className='cancel-btn' onClick={()=>showMsg()}>Cancel</button>
             </>}

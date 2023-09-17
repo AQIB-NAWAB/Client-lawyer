@@ -58,10 +58,20 @@ const ClientSignUp = () => {
       toast.error(error);
       dispatch(clearErrors())
     }
-    if(isAuthenticated){
-      navigate("/client")
-    }
+
   }, [error,dispatch ]);
+  useEffect(() => {
+    if (isAuthenticated && user?.user.role=="client") {
+
+      navigate("/client");
+    }else if(isAuthenticated && user?.user.role=="lawyer"){
+      navigate("/lawyer");
+
+    }else if(isAuthenticated && user?.user.role=="admin"){
+      navigate("/admin");
+    
+    }
+  }, [isAuthenticated, navigate]);
   return (
     <>
     <ToastContainer/>

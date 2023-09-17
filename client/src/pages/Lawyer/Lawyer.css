@@ -62,7 +62,7 @@ outline: none;
     max-height: 580px; /* Set the desired maximum height for the scrollable area */
     overflow-y: scroll;
     padding-bottom: 0px;    /* Enable scrolling when content overflows */
-
+width: 100%;
 
 }
 .services-container{

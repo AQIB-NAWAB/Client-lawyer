@@ -22,6 +22,9 @@ const Search = () => {
   const [city, setCity] = useState('');
   const [budget, setBudget] = useState(0);
 
+  const [selectedLawyer, setSelectedLawyer] = useState(null);
+
+
   useEffect(() => {
     // Clear errors when component mounts
     dispatch(clearErrors());
@@ -190,11 +193,14 @@ const Search = () => {
                             <p>{lawyer.city}</p>
                           </span>
                           <button
-                            className="btn-profile"
-                            onClick={() => setShowProfileModel(true)}
-                          >
-                            Profile
-                          </button>
+  className="btn-profile"
+  onClick={() => {
+    setSelectedLawyer(lawyer);
+    setShowProfileModel(true);
+  }}
+>
+  Profile
+</button>
                         </div>
                       ))
                     )}
@@ -205,8 +211,11 @@ const Search = () => {
               </div>
             )}
             {showProfileModel && (
-              <LawyerProfileModel setShowProfileModel={setShowProfileModel} />
-            )}
+  <LawyerProfileModel
+    setShowProfileModel={setShowProfileModel}
+    selectedLawyer={selectedLawyer} // Pass the selected lawyer as a prop
+  />
+)}
           </section>
         </div>
       </div>

@@ -215,6 +215,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 500;
     font-size: 13px;
+    
 }
 
 .model-details ul{
@@ -256,8 +257,8 @@
     border-radius: 10px;
 }
 .lawyer-detail{
-    max-height: 30rem;
-    overflow-y: auto;
+    height: 20rem;
+    overflow-y: scroll;
 }
 .lawyer-profile-model .head{
     display: flex;

@@ -414,7 +414,7 @@ exports.updateLawyerStatus = catchAsyncError (async (req,res,next)=>{
   if (budget) {
     searchQuery.hourly_rate = { $gte: parseInt(budget) };
   }
-
+searchQuery.status="approve"
   const lawyers = await User.find(searchQuery);
 
   res.status(200).json({
@@ -489,6 +489,7 @@ exports.getAllRequests = catchAsyncError(async (req, res, next) => {
           budget: clientRequest.budget,
           status:clientRequest.status,
           case_description: clientRequest.case_description,
+          createdAt:clientRequest.createdAt.toLocaleDateString(),
           client: {
             name: clientRequest.client_id.name,
             city: clientRequest.client_id.city,
@@ -741,6 +742,9 @@ exports.getAllAcceptedLawyerOffers = async (req, res, next) => {
               name: client.name,
               city: client.city,
               province: client.province,
+              email:client.email,
+              description:client.description,
+              contact:client.phone,
               // Include other client information fields here as needed
             },
           };

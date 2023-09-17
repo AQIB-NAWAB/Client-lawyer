@@ -20,7 +20,7 @@ const [headEditMode,setHeadEditMode]=useState(false)
   const [serviceEditMode,setServiceEditMode]=useState(false)
   const [pastWorkEditMode,setPastWorkEditMode]=useState(false)
 const [educationEditMode,setEducationEditMode]=useState(false)
-
+const [certificatesEditMode,setCertificatesMode]=useState(false)
   const [clientName,setClientName]=useState("")
   const [hourlyRate, setHourlyRate] = useState('');
   const [city, setCity] = useState('');
@@ -156,6 +156,38 @@ const Education=()=>{
     </div>
   )
 }
+
+
+
+// Certificates edit Mode
+const Certificates=()=>{
+  const [institute,setInstitute]=useState("")
+  const [graduation_year,set_graduation_year]=useState("")
+
+  const handleCertificatesSave=()=>{
+    const updatedCertificates=[...certificates,{institute,graduation_year}]
+    dispatch(updateProfile({certificates:updatedCertificates}))
+  }
+  return(
+
+    <div className="request-wrap" >
+    <div className='request_modal_inner' >
+    <div style={{display:"flex",gap:"30px",flexDirection:"column",justifyContent:"center",alignItems:"center",margin:"0px auto"}}>
+<h1>Add The Certificates</h1>
+    <input type="text"  value={institute} placeholder='Enter Institute' onChange={(e)=>setInstitute(e.target.value)}/>
+    <input type="date"  placeholder='Graducation Year' value={graduation_year} onChange={(e)=>set_graduation_year(e.target.value)}/>
+
+
+    <div className="btns">
+
+    <button onClick={()=>handleCertificatesSave()}>Save</button>
+    <button onClick={()=>setCertificatesMode(false)}>Cancel</button>
+    </div>
+    </div>
+    </div>
+    </div>
+  )
+}
   return (
     <>
     <LawyerNavbar/>
@@ -212,7 +244,7 @@ const Education=()=>{
         </>}</li>
         </ul>
         </div>
-    <section className='lawyer-detail'>
+    <section className='lawyer-detail' style={{height:"30rem"}}>
     <div className="description">
     <span className='header'><h1>DESCRIPTION:</h1>{descriptionEditMode?<AiOutlineCheck className='pencil' onClick={()=>updateHandler("descriptionEditMode")}/> :<PiPencilLight className='pencil' onClick={()=>setDescriptionEditMode(true)}/>}</span>
       {descriptionEditMode ?<>
@@ -256,20 +288,19 @@ const Education=()=>{
     </div>
 
     <div className="past-work">
-        <span className='header'><h1>Certificates</h1><FaPlus className='pencil'/></span>
+        <span className='header'><h1>Certificates</h1><FaPlus className='pencil' onClick={()=>setCertificatesMode(true)}/></span>
     <div className="works-container">
-        <span className="work">
-        <p>Institute:</p>
-        <p>Graduation Year:</p>
+       
+
+
+    {
+      user?.user?.certificates.map(single=>(
+        <span className="work" key={single._id}>
+        <p>Institute: {single.institute}</p>
+        <p>Graduation Year: {single.graduation_year}</p>
         </span>
-
-
-        <span className="work">
-        <p>Institute:</p>
-        <p>Graduation Year:</p>
-        </span>
-
-
+      ))
+    }
     </div>
     </div>
 
@@ -299,6 +330,7 @@ const Education=()=>{
   {serviceEditMode && <Service/>}
   {pastWorkEditMode && <PastWork/>}
   {educationEditMode && <Education/>}
+  {certificatesEditMode && <Certificates/> }
 
 
   </>

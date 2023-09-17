@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-const ViewProfileModel = ({ setViewProfileModel }) => {
+const ViewProfileModel = ({details, setViewProfileModel }) => {
   const showMsg = () => {
     setViewProfileModel(false);
   };
-
+console.log(details)
   return (
     <div className="view-profile-wrap">
       <div className="view-profile-detail-container">
@@ -17,17 +17,13 @@ const ViewProfileModel = ({ setViewProfileModel }) => {
           </div>
 
           <div className="model-details-p">
-            <p>Name: Qamar</p>
-            <p>Province: Sindh</p>
-            <p>City: Karachi</p>
-            <p>Email: google@gmail.com</p>
-            <p>Contact: 0320424324</p>
+            <p>Name: {details.client_info.name}</p>
+            <p>Province: {details.client_info.province}</p>
+            <p>City: {details.client_info.city}</p>
+            <p>Email: {details.client_info.email}</p>
+            <p>Contact: {details.client_info.contact}</p>
             <p>
-              Description : <br /> Lorem, ipsum dolor sit amet consectetur
-              adipisicing elit. Praesentium repellendus et quis dolorem expedita
-              corporis dolor vel doloribus veniam quia quidem, nam
-              necessitatibus rerum eius aliquam laudantium pariatur ex
-              similique.
+              Description : <br /> {details.client_info.description}
             </p>
           </div>
         </div>

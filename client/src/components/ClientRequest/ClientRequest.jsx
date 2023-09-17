@@ -13,8 +13,15 @@ const ClientRequest = () => {
 
   const { clientRequests,sentOffers,acceptedoffers,error,loading } = useSelector((state) => state.Lawyer);
 
-    const[showModel,setShowModel]=useState(false);
-    const [requests,setRequest]=useState([])
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [showModel, setShowModel] = useState(false);
+  const [requests,setRequest]=useState([])
+
+  const handleModalSelect = (request) => {
+    setSelectedRequest(request);
+    setShowModel(true);
+  };
+  
 
     const dispatch=useDispatch()
     const navigate=useNavigate()
@@ -25,7 +32,9 @@ const ClientRequest = () => {
         setRequest(clientRequests?.requests)
         
             },[dispatch,navigate])  
-            console.log({requests})  
+            console.log({requests}) 
+            
+
 
   return (
     <>
@@ -57,19 +66,18 @@ const ClientRequest = () => {
 
 {loading?<h4 style={{textAlign:"center",padding:"20px 0px"}}>Loading.....</h4>:clientRequests?.requests?.map((single_request)=>(
     <>
-    {showModel &&  <ClientDetailModel request={single_request}  setShowModel={setShowModel} />}
 
     
-    <section className='request-content-section' key={single_request._id} onClick={()=>setShowModel(true)}>
+    <section className='request-content-section' key={single_request._id} onClick={() => handleModalSelect(single_request)}>
             <div className="request-content">
-                <p>8/20/2023</p>
+                <p>{single_request?.createdAt}</p>
                 <p>{single_request?.client?.name}</p>
                 <p>{single_request.case_type}</p>
                 <p>10</p>   
                 <p>{single_request.budget} PKR</p>
             </div>
             </section>
-    </>
+      </>
 ))}
 
            
@@ -80,6 +88,12 @@ const ClientRequest = () => {
         </section>
     </div>
     </div>
+    {showModel && (
+  <ClientDetailModel
+    request={selectedRequest}
+    setShowModel={() => setShowModel(false)}
+  />
+)}
     </>
   )}
 

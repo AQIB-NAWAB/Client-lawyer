@@ -102,6 +102,30 @@ export const getAllReturnOffers = createAsyncThunk("all/Offers", async ( data,{r
     }
   });  
 
+
+
+  export const sendRequest = createAsyncThunk("send/Request", async ( {case_description,case_type,budget,id},{rejectWithValue } ) => {
+    try {
+      console.log({description,case_type,budget,id})
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      };
+  
+      const response = await axios.post(
+        `http://localhost:8080/api/v1/send-request/${id}`,
+        {case_description,case_type,budget},
+        config
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  });  
+
 const clientReducer = createSlice({
   name: "Client",
   initialState,

@@ -65,6 +65,10 @@ const LawyerSignUp = () => {
       toast.error(error);
       dispatch(clearErrors())
     }
+  
+  }, [error,dispatch,isAuthenticated,navigate ]);
+
+  useEffect(() => {
     if (isAuthenticated && user?.user.role=="client") {
 
       navigate("/client");
@@ -75,8 +79,7 @@ const LawyerSignUp = () => {
       navigate("/admin");
     
     }
-
-  }, [error,dispatch,isAuthenticated,navigate ]);
+  }, [isAuthenticated, navigate]);
   
 
   return (
