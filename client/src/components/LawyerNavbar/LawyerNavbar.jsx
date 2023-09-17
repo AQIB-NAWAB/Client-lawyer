@@ -10,6 +10,7 @@ import { deleteAllNotifications, getAllNotifications } from '../../store/reducer
 const LawyerNavbar = () => {
   const [showModal,setShowModal]=useState(false)
   const {notifications}=useSelector((state)=>state.Notification)
+  const { user, error, isAuthenticated } = useSelector((state) => state.User);
 
   const dispatch=useDispatch()
   const navigate=useNavigate()
@@ -54,7 +55,7 @@ toast.success("logout Successfully")
         }
     </span>
         
-        <li><BsPersonCircle className='navbar-person ' onClick={()=>handleLogout()}/></li>
+        <li ><img onClick={()=>handleLogout()} src={user?.user?.profile_picture_image.url} style={{width:"60px",height:"60px",borderRadius:"50px",objectFit:"cover",border:"1px solid black"}} /></li>
     </ul>
 </div>
     </div> 
