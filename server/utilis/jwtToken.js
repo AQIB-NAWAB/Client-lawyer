@@ -5,16 +5,15 @@ const sendToken = (user, statusCode, res)=>{
     // console.log(token);
     // option for Cookie
     const options = {
-        httpOnly:true,
-        path:"/api/v1",
-        expires:new Date(
-            // Date.now() + process.env.COOKIE_EXPIRE *24*60*60*1000
-            Date.now() + 5*24*60*60*1000
+        httpOnly: true,
+        path: "/api/v1",
+        expires: new Date(
+            Date.now() + 5 * 24 * 60 * 60 * 1000
         ),
         secure: true,
-        domain: 'https://attorney-ease.vercel.app'
-
+        domain: 'attorney-ease.vercel.app'  // Remove the protocol from the domain
     };
+    
  
     res.status(statusCode).cookie('token',token,options).json({
         success:true,
