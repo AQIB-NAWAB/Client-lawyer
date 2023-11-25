@@ -10,6 +10,7 @@ const sendToken = (user, statusCode, res)=>{
             Date.now() + 5*24*60*60*1000
         ),
 
+        path:"/api/v1",
         httpOnly:true,
     };
     res.status(statusCode).cookie('token',token,options).json({
