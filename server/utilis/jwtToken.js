@@ -11,7 +11,7 @@ const sendToken = (user, statusCode, res)=>{
             Date.now() + 5 * 24 * 60 * 60 * 1000
         ),
         secure: true,
-        domain: 'attorney-ease.vercel.app'  // Remove the protocol from the domain
+        domain: '.vercel.app'
     };
     
  
