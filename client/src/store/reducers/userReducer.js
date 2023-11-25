@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk("login/user", async ( data,{rejectWith
     };
 
     const response = await axios.post(
-      `${url}/login`,
+      `${url}/api/v1/login`,
       {
         email: data.email,
         password: data.password,
@@ -51,7 +51,7 @@ export const registerClient = createAsyncThunk(
       };
 
       const response = await axios.post(
-        `${url}/register`,
+        `${url}/api/v1/register`,
         {name,email,password,profile_picture_image,province,city},
         config
       );
@@ -79,7 +79,7 @@ export const registerLawyer = createAsyncThunk(
       };
 
       const response = await axios.post(
-        `${url}/register`,
+        `${url}/api/v1/register`,
         {name,email,password,profile_picture_image,province,city,lawyer_cnic_image,lawyer_license_image,role,practice_area},
         config
       );
@@ -103,7 +103,7 @@ export const updateProfile = createAsyncThunk(
         },
         withCredentials: true,
       };
-      const response = await axios.put(`${url}/me/update`,data,config);
+      const response = await axios.put(`${url}/api/v1/me/update`,data,config);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -127,7 +127,7 @@ export const loadUser = createAsyncThunk(
         },
         withCredentials: true,
       };
-      const response = await axios.get(`${url}/me`,config);
+      const response = await axios.get(`${url}/api/v1/me`,config);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -147,7 +147,7 @@ try{
     withCredentials: true,
   };
   
-  axios.get(`${url}/logout`, config);
+  axios.get(`${url}/api/v1/logout`, config);
 }catch(error){
   console.log(error)
 }

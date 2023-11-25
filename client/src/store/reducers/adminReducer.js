@@ -25,7 +25,7 @@ export const getAllLawyers = createAsyncThunk("all/lawyers", async ( data,{rejec
     };
 
     const response = await axios.get(
-      `${url}/admin/lawyers`,
+      `${url}/api/v1/admin/lawyers`,
       config
     );
     console.log(response.data);
@@ -46,7 +46,7 @@ export const getAllPendingLawyers = createAsyncThunk("all/pending/lawyers", asyn
       };
   
       const response = await axios.get(
-        `${url}/admin/lawyers/pending`,
+        `${url}/api/v1/admin/lawyers/pending`,
         config
       );
       console.log(response.data);
@@ -70,7 +70,7 @@ export const getAllApprovedLawyers = createAsyncThunk("all/approved/lawyers", as
       };
   
       const response = await axios.get(
-        `${url}/admin/lawyers/approve`,
+        `${url}/api/v1/admin/lawyers/approve`,
         config
       );
       console.log(response.data);
@@ -92,7 +92,7 @@ export const getAllApprovedLawyers = createAsyncThunk("all/approved/lawyers", as
       };
   
       const response = await axios.put(
-        `${url}/admin/lawyer/status`,
+        `${url}/api/v1/admin/lawyer/status`,
         {
             id,
             status,

@@ -28,7 +28,7 @@ app.use(fileUpload());
 
 const user = require('./routes/userRoute');
 
-app.use('/',user);
+app.use('/api/v1',user);
 
 
 

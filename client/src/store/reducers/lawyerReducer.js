@@ -24,7 +24,7 @@ export const getClientRequests = createAsyncThunk("all/Client/Request/{Lawyer}",
     };
 
     const response = await axios.get(
-      `${url}/lawyers/requests`,
+      `${url}/api/v1/lawyers/requests`,
       config
     );
     console.log(response.data);
@@ -45,7 +45,7 @@ export const getAllSentOffer = createAsyncThunk("all/sent/Offers", async ( data,
       };
   
       const response = await axios.get(
-        `${url}/lawyers/sent/offers `,
+        `${url}/api/v1/lawyers/sent/offers `,
         
         config
       );
@@ -71,7 +71,7 @@ export const getAllAcceptedOffer = createAsyncThunk("all/accepted/Offers", async
       };
   
       const response = await axios.get(
-        `${url}/lawyers/accepted/offers`,
+        `${url}/api/v1/lawyers/accepted/offers`,
         
         config
       );
@@ -96,7 +96,7 @@ export const getAllAcceptedOffer = createAsyncThunk("all/accepted/Offers", async
       };
   
       const response = await axios.post(
-        `${url}/send-offer/${client_id}`,
+        `${url}/api/v1/send-offer/${client_id}`,
         {description,rate,client_request_id},
         config
       );
@@ -120,7 +120,7 @@ export const getAllAcceptedOffer = createAsyncThunk("all/accepted/Offers", async
       };
   
       const response = await axios.post(
-        `${url}/custom/send-custom-request/`,
+        `${url}/api/v1/custom/send-custom-request/`,
         {city,province,description,case_type,budget},
         config
       );
