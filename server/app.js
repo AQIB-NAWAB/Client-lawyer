@@ -28,10 +28,6 @@ app.use(fileUpload());
 
 const user = require('./routes/userRoute');
 
-app.use("/",(req,res)=>{
-  res.send("hello")
-  
-})
 app.use('/api/v1',user);
 
 
