@@ -20,7 +20,7 @@ export const searchLawyers = createAsyncThunk(
           },
           withCredentials: true,
         };
-        const response = await axios.get(`${url}/api/v1/search/lawyers?city=${city}&budget=${budget}&name=${name}&practice_area=${practice_area}&province=${province}`,
+        const response = await axios.get(`${url}/search/lawyers?city=${city}&budget=${budget}&name=${name}&practice_area=${practice_area}&province=${province}`,
         {},
         config);
         return response.data;

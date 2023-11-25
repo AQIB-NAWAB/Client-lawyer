@@ -23,7 +23,7 @@ export const getAllSentRequest = createAsyncThunk("all/sent/Request", async ( da
     };
 
     const response = await axios.get(
-      `${url}/api/v1/client/sent-requests`,
+      `${url}/client/sent-requests`,
       config
     );
     console.log(response.data);
@@ -44,7 +44,7 @@ export const getAllReturnOffers = createAsyncThunk("all/return/Offers", async ( 
       };
   
       const response = await axios.get(
-        `${url}/api/v1/client/return-requests`,
+        `${url}/client/return-requests`,
         config
       );
       console.log(response.data);
@@ -68,7 +68,7 @@ export const getAllReturnOffers = createAsyncThunk("all/return/Offers", async ( 
       };
   
       const response = await axios.post(
-        `${url}/api/v1/accept-offer/${id}`,
+        `${url}/accept-offer/${id}`,
         {},
         config
       );
@@ -92,7 +92,7 @@ export const getAllReturnOffers = createAsyncThunk("all/return/Offers", async ( 
       };
   
       const response = await axios.post(
-        `${url}/api/v1/custom/send-custom-request/`,
+        `${url}/custom/send-custom-request/`,
         {city,province,description,case_type,budget},
         config
       );
@@ -115,7 +115,7 @@ export const getAllReturnOffers = createAsyncThunk("all/return/Offers", async ( 
       };
   
       const response = await axios.post(
-        `${url}/api/v1/send-request/${id}`,
+        `${url}/send-request/${id}`,
         {case_description,case_type,budget},
         config
       );

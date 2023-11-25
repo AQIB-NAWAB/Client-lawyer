@@ -22,7 +22,7 @@ export const getAllNotifications = createAsyncThunk("all/Notifications", async (
     };
 
     const response = await axios.get(
-      `${url}/api/v1/notifications`,
+      `${url}/notifications`,
       config
     );
     console.log(response.data);
@@ -43,7 +43,7 @@ export const deleteAllNotifications = createAsyncThunk("delete/all/Notifications
       };
   
       const response = await axios.delete(
-        `${url}/api/v1/notifications`,
+        `${url}/notifications`,
         config
       );
       console.log(response.data);
