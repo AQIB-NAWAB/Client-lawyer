@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({ path: "config/config.env" });
 }
 const corsOptions = {
-  origin: 'https://attorney-ease.vercel.app',
+  origin: '*',
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
