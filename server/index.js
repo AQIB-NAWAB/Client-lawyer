@@ -1,6 +1,7 @@
 const app = require("./app");
 const cloudinary = require("cloudinary");
-
+const path=require('path')
+const express = require("express");
 const connectDatabase = require("./config/database");
 
 //handling uncaught exception
@@ -9,6 +10,12 @@ process.on("uncaughtException", (err) => {
   console.log("`Shuttting down the server due to uncaught exception");
   process.exit(1);
 });
+
+const _dirname = path.dirname("")
+const buildPath = path.join(__dirname, "../client/dist");
+console.log("buildPath", buildPath);
+app.use(express.static(buildPath));
+
 
 // Config
 if (process.env.NODE_ENV !== "PRODUCTION") {
